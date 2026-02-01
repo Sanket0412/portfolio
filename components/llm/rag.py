@@ -1,7 +1,6 @@
-import bs4
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_core.runnables import RunnablePassthrough
+#from langchain_community.vectorstores import Chroma
+#from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.documents import Document
 from pathlib import Path
