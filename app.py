@@ -62,7 +62,7 @@ This site showcases selected projects, publications, and a live chat that answer
     with c1:
         st.page_link("pages/1_Projects.py", label="View Projects", icon="🧩")
     with c2:
-        st.page_link("pages/4_Chat.py", label="Chat as Sanket", icon="💬")
+        st.page_link("pages/4_Chat.py", label="Chat with Sanket", icon="💬")
     with c3:
         st.page_link("pages/2_Publications.py", label="Publications", icon="📄")
     with c4:
