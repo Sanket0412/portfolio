@@ -1,14 +1,40 @@
+# ======================
+# Core app
+# ======================
 streamlit>=1.38
 pydantic>=2.7
 python-dotenv>=1.0
-tiktoken>=0.7
+
+# ======================
+# Data utilities
+# ======================
 numpy>=1.26
 pandas>=2.2
-langchain>=0.3
-langchain-openai>=0.2
-chromadb>=0.5
-pymupdf>=1.24
-unstructured>=0.15
+requests>=2.32
 markdown>=3.6
 
-requests>=2.32
+# ======================
+# LangChain ecosystem
+# ======================
+langchain>=0.3
+langchain-core>=0.2.0
+langchain-community>=0.3
+langchain-openai>=0.2
+langchainhub>=0.1.21
+
+# ======================
+# Vector store
+# ======================
+chromadb>=0.5
+
+# ======================
+# Tokenization
+# ======================
+tiktoken>=0.7
+
+# ======================
+# PDF parsing
+# ======================
+pypdf==5.6.0
+pypdf2==3.0.1
+pdfplumber>=0.11.0
