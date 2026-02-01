@@ -4,7 +4,7 @@ from components.project_cards import render_project_grid
 st.set_page_config(page_title="Projects", page_icon="🧩", layout="wide")
 
 from components.navbar import render_sidebar_profile
-
+from components.config.bootstrap import *
 with st.sidebar:
     render_sidebar_profile(show_env=True)
 

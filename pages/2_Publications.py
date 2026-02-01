@@ -11,7 +11,7 @@ import streamlit as st
 st.set_page_config(page_title="Publications", page_icon="📄", layout="wide")
 
 from components.navbar import render_sidebar_profile
-
+from components.config.bootstrap import *
 with st.sidebar:
     render_sidebar_profile(show_env=True)
 DATA_PATH = Path("content/publications/publications.json")
