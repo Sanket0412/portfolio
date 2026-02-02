@@ -46,11 +46,12 @@ MODEL_NAME = get_env("MODEL_NAME", "gpt-4o-mini")
 # =========================
 # Hero section
 # =========================
-st.title("Hi, I am Sanket J Shah")
-st.subheader("Data Scientist, MLE and a Gen AI expert")
+
 
 col1, col2 = st.columns([2, 1])
 with col1:
+    st.title("Hi, I am Sanket J Shah")
+    st.subheader("Data Scientist, MLE and a Gen AI expert")
     st.markdown(
         """
 I build end to end data and ML systems that power personalization, audience insights, and agentic AI workflows.
@@ -69,9 +70,22 @@ This site showcases selected projects, publications, and a live chat that answer
         st.page_link("pages/3_Experience.py", label="Experience", icon="💼")
 
 with col2:
-    st.metric("Years of exp", "3+", help="Professional years across DS, DE, and ML")
-    st.metric("Deployed models", "20+", help="Production and pilot deployments")
-    st.metric("Datasets at scale", "Billion+ rows", help="Audience and behavioral data")
+    st.markdown("### Education")
+
+    with st.container(border=True):
+        st.markdown("**Master of Science in Computer Science**")
+        st.caption("Stevens Institute of Technology, Hoboken, NJ")
+        st.write("Graduated: January 2024")
+        #st.write("Coursework: Machine Learning, Deep Learning, Big Data, Applied AI")
+
+    st.write("")
+
+    with st.container(border=True):
+        st.markdown("**B.Tech, Information and Communication Technology**")
+        st.caption("Ahmedabad University, India")
+        st.write("Graduated: May 2022")
+        #st.write("Coursework: Data Structures and Algorithms, Database Management Systems, Operating Systems, Software Engineering, Human Computer Interaction, Cloud Computing")
+
 
 st.divider()
 
@@ -93,26 +107,26 @@ with hcol3:
     st.caption("Chat that answers as Sanket using RAG over this site.")
     st.page_link("pages/4_Chat.py", label="Try it", icon="➡️")
 
-st.divider()
+#st.divider()
 
 # =========================
 # Diagnostics block (dev only)
 # =========================
-if (APP_ENV or "").lower() in {"dev", "development"}:
-    with st.expander("Developer diagnostics"):
-        st.write("Loaded configuration:")
-        st.json(
-            {
-                "APP_ENV": APP_ENV,
-                "MODEL_NAME": MODEL_NAME,
-                "OPENAI_API_KEY set": bool(get_env("OPENAI_API_KEY")),
-                "ANTHROPIC_API_KEY set": bool(get_env("ANTHROPIC_API_KEY")),
-            }
-        )
-        if not get_env("OPENAI_API_KEY") and not get_env("ANTHROPIC_API_KEY"):
-            st.warning(
-                "No LLM provider key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY in .env for local or in Streamlit secrets when deployed."
-            )
+# if (APP_ENV or "").lower() in {"dev", "development"}:
+#     with st.expander("Developer diagnostics"):
+#         st.write("Loaded configuration:")
+#         st.json(
+#             {
+#                 "APP_ENV": APP_ENV,
+#                 "MODEL_NAME": MODEL_NAME,
+#                 "OPENAI_API_KEY set": bool(get_env("OPENAI_API_KEY")),
+#                 "ANTHROPIC_API_KEY set": bool(get_env("ANTHROPIC_API_KEY")),
+#             }
+#         )
+#         if not get_env("OPENAI_API_KEY") and not get_env("ANTHROPIC_API_KEY"):
+#             st.warning(
+#                 "No LLM provider key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY in .env for local or in Streamlit secrets when deployed."
+#             )
 
 # =========================
 # Footer
