@@ -27,6 +27,8 @@ An interactive, AI-powered personal portfolio built with Streamlit, featuring pr
 - Guardrails to prevent hallucinations
 
 ---
+📐 **System Design & Architecture**  
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a detailed breakdown of the RAG pipeline, chatbot design, and system tradeoffs.
 
 ## 🏗️ Project Structure
 
@@ -72,7 +74,4 @@ streamlit run app.py
 
 ## 👤 Author 
 **Sanket J Shah**  
-Data Scientist | ML Engineer | GenAI  
-
-**Sanket J Shah**  
-Data Scientist | ML Engineer | GenAI  
+Data Scientist | ML Engineer | GenAI 
