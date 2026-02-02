@@ -101,7 +101,7 @@ def pub_card(pub: Dict[str, Any]):
                 st.link_button("Cite (DOI)", f"https://doi.org/{doi}", use_container_width=True)
 
 st.title("Publications")
-st.caption("Auto populated from Crossref and OpenAlex. Cards show title, venue, authors, date, abstract, and links.")
+#st.caption("Auto populated from Crossref and OpenAlex. Cards show title, venue, authors, date, abstract, and links.")
 
 pubs = load_publications()
 
