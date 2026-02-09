@@ -12,6 +12,7 @@ from langchain_core.vectorstores import InMemoryVectorStore
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROFILE_DIR = REPO_ROOT / "content" / "profile"
+PROJECTS_DIR = REPO_ROOT / "content" / "projects"
 PERSONA_NAME = "Sanket J Shah"
 
 def _read_pdf_with_pdfplumber(pdf_path: Path) -> Optional[str]:
@@ -34,6 +35,9 @@ def load_profile_context(
     linkedin_pdf_name: str = "linkedin.pdf",
     resume_pdf_name: str = "resume.pdf",
     persona_summary: str = "summary.txt",
+    wpp_media_projects: str = "WPP_Media_Projects.pdf",
+    third_estate_ventures_projects: str = "Third_Estate_Ventures_Projects.pdf",
+    cloudserve_projects: str = "Cloudserve_Projects.pdf",
     max_chars_per_doc: int = 20000
 ) -> List[Document]:
     """
@@ -42,6 +46,9 @@ def load_profile_context(
     linkedin_path = PROFILE_DIR / linkedin_pdf_name
     resume_path = PROFILE_DIR / resume_pdf_name
     persona_path = PROFILE_DIR / persona_summary
+    wpp_media_projects_path = PROJECTS_DIR / wpp_media_projects
+    third_estate_ventures_projects_path = PROJECTS_DIR / third_estate_ventures_projects
+    cloudserve_projects_path = PROJECTS_DIR / cloudserve_projects
 
     docs: List[Document] = []
 
@@ -66,19 +73,49 @@ def load_profile_context(
             )
 
     if persona_path.exists():
-        persona_txt = persona_path.read_text(encoding="utf-8", errors="ignore").strip()
-        if persona_txt:
+        persona_text = persona_path.read_text(encoding="utf-8", errors="ignore").strip()
+        if persona_text:
             docs.append(
                 Document(
-                    page_content=persona_txt[:max_chars_per_doc],
+                    page_content=persona_text[:max_chars_per_doc],
                     metadata={"source": "persona_summary"},
                 )
             )
-
+    
+    # WPP Media Projects
+    if wpp_media_projects_path.exists():
+        wpp_text = _read_pdf_with_pdfplumber(wpp_media_projects_path)
+        if wpp_text:
+            docs.append(
+                Document(
+                    page_content=wpp_text[:max_chars_per_doc],
+                    metadata={"source": "wpp_media_projects"},
+                )
+            )
+    # Third Estate Ventures Projects
+    if third_estate_ventures_projects_path.exists():
+        tev_text = _read_pdf_with_pdfplumber(third_estate_ventures_projects_path)
+        if tev_text:
+            docs.append(
+                Document(
+                    page_content=tev_text[:max_chars_per_doc],
+                    metadata={"source": "third_estate_ventures_projects"},
+                )
+            )
+    # Cloudserve Projects
+    if cloudserve_projects_path.exists():
+        cloudserve_text = _read_pdf_with_pdfplumber(cloudserve_projects_path)
+        if cloudserve_text:
+            docs.append(
+                Document(
+                    page_content=cloudserve_text[:max_chars_per_doc],
+                    metadata={"source": "cloudserve_projects"},
+                )
+            )
     if not docs:
         raise FileNotFoundError(
             f"No usable profile docs found in {PROFILE_DIR}. "
-            f"Expected one of: {linkedin_pdf_name}, {resume_pdf_name}, {persona_summary}"
+            f"Expected one of: {linkedin_pdf_name}, {resume_pdf_name}, {persona_summary}, {wpp_media_projects}, {third_estate_ventures_projects}, {cloudserve_projects}"
         )
 
     return docs
@@ -86,8 +123,8 @@ def load_profile_context(
 
 def _split_docs(docs: List[Document]) -> List[Document]:
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        chunk_size=350,
-        chunk_overlap=60
+        chunk_size=1200,
+        chunk_overlap=200
     )
     return text_splitter.split_documents(docs)
 
