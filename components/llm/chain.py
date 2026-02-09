@@ -71,7 +71,15 @@ def build_rag_chain_with_history(system_prompt: str, llm, k: int = 3):
         [
             ("system", system_prompt),
             MessagesPlaceholder("chat_history"),
-            ("human", "Question:\n{question}\n\nRetrieved context:\n{context}"),
+            (
+                "human",
+                "Question:\n{question}\n\n"
+                "Retrieved context:\n{context}\n\n"
+                "Rules:\n"
+                "- If Retrieved context is empty, you MUST say you do not have enough information in the current context.\n"
+                "- Do NOT answer from memory or general knowledge.\n"
+                "- For questions about the most recent role, only answer if the context explicitly includes the employer and dates.\n"
+            ),
         ]
     )
 
