@@ -1,19 +1,61 @@
+# components/llm/rag.py
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-#from langchain_community.vectorstores import Chroma
-#from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.documents import Document
 from pathlib import Path
 from typing import List, Optional
 import pdfplumber
+import re
 
-#Changes
 from langchain_core.vectorstores import InMemoryVectorStore
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROFILE_DIR = REPO_ROOT / "content" / "profile"
 PROJECTS_DIR = REPO_ROOT / "content" / "projects"
 PERSONA_NAME = "Sanket J Shah"
+
+
+# =========================
+# Guardrail helpers
+# =========================
+_INJECTION_PATTERNS = [
+    r"ignore (all|any|previous) instructions",
+    r"system prompt",
+    r"developer message",
+    r"reveal (the )?hidden",
+    r"you are chatgpt",
+    r"do anything now",
+    r"jailbreak",
+    r"bypass",
+]
+
+def _sanitize_retrieved_text(text: str, *, max_chars: int) -> str:
+    """
+    Sanitize retrieved text to reduce prompt injection risk while preserving facts.
+    This is intentionally light-touch: removes control chars and obvious injection lines.
+    """
+    if not text:
+        return ""
+
+    # Normalize whitespace and remove non-printable control characters
+    text = text.replace("\x00", " ")
+    text = re.sub(r"[\x01-\x08\x0B-\x1F\x7F]", " ", text)
+    text = re.sub(r"\s+\n", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
+
+    # Remove lines that look like instruction hijacks
+    lines = text.splitlines()
+    kept: List[str] = []
+    for ln in lines:
+        low = ln.strip().lower()
+        if any(re.search(p, low) for p in _INJECTION_PATTERNS):
+            continue
+        kept.append(ln)
+
+    out = "\n".join(kept).strip()
+    return out[:max_chars]
+
 
 def _read_pdf_with_pdfplumber(pdf_path: Path) -> Optional[str]:
     pages: List[str] = []
@@ -25,11 +67,11 @@ def _read_pdf_with_pdfplumber(pdf_path: Path) -> Optional[str]:
                 if txt:
                     pages.append(txt)
     except Exception:
-        # If pdfplumber fails for any reason, return None so caller can skip it safely
         return None
 
     out = "\n\n".join(pages).strip()
     return out if out else None
+
 
 def load_profile_context(
     linkedin_pdf_name: str = "linkedin.pdf",
@@ -55,67 +97,50 @@ def load_profile_context(
     if linkedin_path.exists():
         linkedin_text = _read_pdf_with_pdfplumber(linkedin_path)
         if linkedin_text:
-            docs.append(
-                Document(
-                    page_content=linkedin_text[:max_chars_per_doc],
-                    metadata={"source": "linkedin_pdf"},
-                )
-            )
+            safe = _sanitize_retrieved_text(linkedin_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "linkedin_pdf"}))
 
     if resume_path.exists():
         resume_text = _read_pdf_with_pdfplumber(resume_path)
         if resume_text:
-            docs.append(
-                Document(
-                    page_content=resume_text[:max_chars_per_doc],
-                    metadata={"source": "resume_pdf"},
-                )
-            )
+            safe = _sanitize_retrieved_text(resume_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "resume_pdf"}))
 
     if persona_path.exists():
         persona_text = persona_path.read_text(encoding="utf-8", errors="ignore").strip()
         if persona_text:
-            docs.append(
-                Document(
-                    page_content=persona_text[:max_chars_per_doc],
-                    metadata={"source": "persona_summary"},
-                )
-            )
-    
-    # WPP Media Projects
+            safe = _sanitize_retrieved_text(persona_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "persona_summary"}))
+
     if wpp_media_projects_path.exists():
         wpp_text = _read_pdf_with_pdfplumber(wpp_media_projects_path)
         if wpp_text:
-            docs.append(
-                Document(
-                    page_content=wpp_text[:max_chars_per_doc],
-                    metadata={"source": "wpp_media_projects"},
-                )
-            )
-    # Third Estate Ventures Projects
+            safe = _sanitize_retrieved_text(wpp_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "wpp_media_projects"}))
+
     if third_estate_ventures_projects_path.exists():
         tev_text = _read_pdf_with_pdfplumber(third_estate_ventures_projects_path)
         if tev_text:
-            docs.append(
-                Document(
-                    page_content=tev_text[:max_chars_per_doc],
-                    metadata={"source": "third_estate_ventures_projects"},
-                )
-            )
-    # Cloudserve Projects
+            safe = _sanitize_retrieved_text(tev_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "third_estate_ventures_projects"}))
+
     if cloudserve_projects_path.exists():
         cloudserve_text = _read_pdf_with_pdfplumber(cloudserve_projects_path)
         if cloudserve_text:
-            docs.append(
-                Document(
-                    page_content=cloudserve_text[:max_chars_per_doc],
-                    metadata={"source": "cloudserve_projects"},
-                )
-            )
+            safe = _sanitize_retrieved_text(cloudserve_text, max_chars=max_chars_per_doc)
+            if safe:
+                docs.append(Document(page_content=safe, metadata={"source": "cloudserve_projects"}))
+
     if not docs:
         raise FileNotFoundError(
             f"No usable profile docs found in {PROFILE_DIR}. "
-            f"Expected one of: {linkedin_pdf_name}, {resume_pdf_name}, {persona_summary}, {wpp_media_projects}, {third_estate_ventures_projects}, {cloudserve_projects}"
+            f"Expected one of: {linkedin_pdf_name}, {resume_pdf_name}, {persona_summary}, "
+            f"{wpp_media_projects}, {third_estate_ventures_projects}, {cloudserve_projects}"
         )
 
     return docs
