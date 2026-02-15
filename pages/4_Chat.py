@@ -27,7 +27,7 @@ PERSONA_NAME = "Sanket J Shah"
 # First Streamlit call
 st.set_page_config(page_title="Chat with Sanket", page_icon="💬", layout="wide")
 
-st.write("OPENAI_API_KEY available (env or secrets):", bool(get_secret("OPENAI_API_KEY")))
+#st.write("OPENAI_API_KEY available (env or secrets):", bool(get_secret("OPENAI_API_KEY")))
 
 with st.sidebar:
     render_sidebar_profile(show_env=True)
