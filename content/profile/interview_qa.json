@@ -1,0 +1,696 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-02-15T20:01:44Z",
+  "owner": {
+    "name": "Sanket J Shah",
+    "location": "Jersey City, NJ"
+  },
+  "items": [
+    {
+      "id": "intro_001",
+      "question": "Tell me about yourself.",
+      "answer_short": "I am a Data Scientist at WPP Media, where I build governed ML and GenAI workflows for audience creation and insights. I hold an MS in Computer Science from Stevens Institute of Technology and a BTech in Information and Communication Technology from Ahmedabad University. My work spans AdTech and marketing analytics, real estate analytics, and healthcare NLP, with a focus on building reliable, scalable systems that combine strong data foundations with practical AI.",
+      "answer_long": "I am a Data Scientist at WPP Media, focused on building production ML and applied GenAI systems for audience creation and insights in marketing analytics. I enjoy working at the intersection of data engineering and ML, especially when solutions need to be governed, auditable, and scalable across large datasets.\n\nI hold an MS in Computer Science from Stevens Institute of Technology and a BTech in Information and Communication Technology from Ahmedabad University. Across roles, I have worked in AdTech and audience analytics (governed audience creation workflows and ML modeling), real estate analytics (computer vision based property annotation and LLM powered insight extraction), and healthcare (NLP systems for medical document processing and summarization).\n\nOverall, I care most about building systems that stakeholders can trust. That means clear assumptions, strong validation, and measurable impact, whether the output is a dataset, a model score, or a user-facing tool.",
+      "tags": [
+        "intro",
+        "overview",
+        "experience"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf",
+        "Cloudserve_Projects.pdf"
+      ]
+    },
+    {
+      "id": "intro_002",
+      "question": "What is your most recent role and what did you own?",
+      "answer_short": "I am a Data Scientist at WPP Media (March 2025 to present). I owned the end-to-end Audience Creation module of the Audience Insights App, including the Dash UI rule builder and a deterministic SQL compiler for nested audience rules.",
+      "answer_long": "Situation: Analytics teams needed a governed workflow to define and reuse audiences without hand-written, inconsistent SQL.\nTask: Own the Audience Creation module and make audience definition repeatable, validated, and safe at scale.\nAction: Built the Dash UI rule builder, implemented a deterministic SQL compiler supporting nested AND/OR rule trees, optimized Snowflake SQL patterns for large-scale filtering and joins, and added validation guardrails for consistent joins, time windows, allowed operators, and policy-aware feature usage.\nResult: Deployed and tested with an internal analytics team of about 15 users, reducing time-to-first-audience and profiling iterations from 30 to 60+ minutes manually to under about 10 minutes using the governed workflow.",
+      "tags": [
+        "wpp",
+        "experience",
+        "ownership",
+        "audience_creation"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "intro_003",
+      "question": "What kinds of problems do you like working on?",
+      "answer_short": "I like problems where data scale and product constraints meet, for example governed audience building, reliable ML pipelines, and pragmatic GenAI features that are grounded in real data and safe to operate.",
+      "answer_long": "I gravitate toward:\n- Building systems that turn messy requirements into deterministic, testable pipelines (SQL generation, validation, and governance).\n- ML workflows that are explainable and measurable (feature engineering, model diagnostics, batch scoring).\n- GenAI features that add value without sacrificing trust (retrieval grounding, allowlisting, and human approval for high-risk actions).",
+      "tags": [
+        "behavioral",
+        "preferences",
+        "values"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_001",
+      "question": "Walk me through the Audience Creation module you built.",
+      "answer_short": "I built the Audience Creation module as a governed workflow: a Dash UI rule builder feeds a deterministic SQL compiler that produces validated Snowflake SQL for nested AND/OR audience definitions, with guardrails to prevent invalid or unsafe queries.",
+      "answer_long": "Situation: Manual audience SQL was inconsistent and hard to reuse, and it did not scale for less SQL-heavy users.\nTask: Create a guided, auditable workflow for defining audiences that stays correct across joins, time windows, and policies.\nAction: Implemented a rule builder UI, a deterministic SQL compiler for nested logic, safe SQL generation patterns for high-cardinality filters and joins, and validation guardrails that enforce allowed operators and policy-aware feature usage. Co-owned a gated text-to-SQL pilot for long-tail requests with strict dataset allowlisting and human approval.\nResult: Enabled guided audience creation and reduced iteration time, while standardizing logic so similar questions produce comparable audiences.",
+      "tags": [
+        "wpp",
+        "audience_creation",
+        "dash",
+        "snowflake",
+        "sql_compiler",
+        "governance"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "wpp_002",
+      "question": "How did you handle nested Boolean logic (AND/OR) in audience rules?",
+      "answer_short": "I treated it like a compiler problem: represent the rule tree explicitly and generate SQL deterministically so the same logical tree always produces the same query structure.",
+      "answer_long": "- Represent rules as a nested tree structure (groups and predicates).\n- Compile the tree into SQL with stable ordering and parentheses to preserve semantics.\n- Enforce validation prior to compilation (operator allowlist, datatype compatibility, time window constraints).\n- Emit SQL templates that standardize joins and feature usage patterns to keep results comparable across audiences.",
+      "tags": [
+        "wpp",
+        "sql_compiler",
+        "logic",
+        "audience_creation"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_003",
+      "question": "What guardrails did you implement to prevent incorrect audiences?",
+      "answer_short": "I added validation layers that enforce consistent joins, time windows, allowed operators, and policy-aware feature usage so invalid or unsafe queries are blocked before execution.",
+      "answer_long": "Guardrails included:\n- Join consistency checks so the audience definition does not unintentionally change grain or duplicate records.\n- Time window enforcement to keep filters comparable and avoid accidental leakage across periods.\n- Operator allowlisting and type checks (for example, numeric comparisons only on numeric features).\n- Policy-aware rules to prevent disallowed feature usage patterns.\n- For the text-to-SQL pilot, strict dataset allowlisting and human approval before execution.",
+      "tags": [
+        "wpp",
+        "governance",
+        "validation",
+        "text_to_sql"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_004",
+      "question": "How did you integrate an LLM into the workflow safely?",
+      "answer_short": "I used gating and constraints: the LLM was only used for long-tail text-to-SQL requests and for narrative summaries on top of deterministic charts, with allowlisted datasets and human approval for execution.",
+      "answer_long": "Situation: Some analyst requests exceeded the expressiveness of rule-based filters and required complex SQL patterns.\nTask: Enable long-tail requests without sacrificing governance and trust.\nAction: Co-owned a gated text-to-SQL pilot with strict dataset allowlisting and a human approval step before execution. Separately, introduced LLM-assisted chart summaries using prompt templates per visualization type, grounded on deterministic outputs instead of free-form speculation.\nResult: Supported more complex requests while keeping execution auditable, and improved accessibility of profiling results with concise summaries.",
+      "tags": [
+        "wpp",
+        "llm",
+        "text_to_sql",
+        "safety",
+        "governance"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "wpp_005",
+      "question": "What scale did you work with for audience generation?",
+      "answer_short": "Audience generation ran across 4.5B+ records spanning demographic, financial, and transactional sources, so I optimized SQL generation patterns to handle high-cardinality filters and joins safely.",
+      "answer_long": "The system needed to be stable at very large scale. I focused on SQL generation patterns that:\n- Push filtering as early as possible,\n- Avoid accidental fan-out from joins,\n- Standardize time windows and join keys,\n- Keep queries repeatable and auditable through deterministic compilation and validation.",
+      "tags": [
+        "wpp",
+        "scale",
+        "snowflake",
+        "sql"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_006",
+      "question": "How did you validate correctness versus manual SQL?",
+      "answer_short": "I used side-by-side comparisons against trusted manual SQL outputs and iterated with analysts on edge cases, focusing on join correctness, filter semantics, and stability across slices.",
+      "answer_long": "Validation approach:\n- Partnered with analysts to compare governed outputs against trusted manual SQL for the same audience definition.\n- Checked stability across slices and key distributions to catch join or windowing issues.\n- Used iterative feedback cycles to refine rule semantics, UI behavior, and validation rules for edge cases.",
+      "tags": [
+        "wpp",
+        "validation",
+        "testing",
+        "collaboration"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_007",
+      "question": "Tell me about the propensity modeling work you did.",
+      "answer_short": "I supported large-scale propensity and related modeling workflows for global brands by leading feature engineering and selection in Snowflake, training and evaluating models in DataRobot, and producing repeatable scoring outputs for activation.",
+      "answer_long": "Situation: Teams needed consistent, interpretable audience scores to support activation decisions across varied brands and categories.\nTask: Build repeatable modeling pipelines that can adapt to different client use cases while staying interpretable.\nAction: Led feature engineering and feature selection on large consumer datasets stored in Snowflake, used DataRobot AutoML to iterate across model blueprints, and validated outputs with diagnostics such as feature importance and error analysis. Produced batch scoring outputs and documentation for downstream activation.\nResult: Enabled consistent scoring workflows and repeatable pipelines that support targeting and measurement.",
+      "tags": [
+        "wpp",
+        "ml",
+        "propensity",
+        "datarobot",
+        "feature_engineering"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "wpp_008",
+      "question": "What is Fusion-as-a-Service (FaaS) and what did you do on it?",
+      "answer_short": "Fusion-as-a-Service (FaaS) is a production enrichment pipeline that projects survey-level attributes onto a larger population dataset using statistically grounded donor-recipient matching. I supported schema and hook mapping, feature engineering, kNN or hot-deck style fusion execution, and validation, plus automated tuning (Autofusion) and optimization of predictor weights in a GCP-native Kubeflow setup.",
+      "answer_long": "Situation: Survey data is rich but small, while population datasets are large but often missing the survey-derived attributes needed for activation and measurement.\nTask: Deliver a reusable, production enrichment pipeline that transfers survey target attributes onto recipient populations in a statistically defensible, repeatable way.\nAction: Worked on Fusion-as-a-Service (FaaS), which uses kNN or hot-deck style nearest-neighbor fusion to match donor and recipient records using shared hook variables, then transfers survey attributes via probabilistic donor selection. Prepared and aligned donor and recipient datasets, supported schema and hook mapping with standardized data dictionaries, and executed and iterated on the fusion pipeline with strong quality checks (distributional alignment, slice stability, and sensitivity to key configuration settings). Supported automated tuning workflows (Autofusion) across parameters such as k, match limits, distance metrics, and distance-weighted selection, and supported optimization of predictor weights including genetic algorithm based search. Applied PCA where applicable to reduce dimensionality in high-feature settings and supported NLP-assisted standardization and validation for string-based hook variables. Supported pipeline orchestration in a GCP-native environment using Kubeflow and cloud storage, and produced production-ready outputs plus interpretable data maps.\nResult: Enabled population-scale inference from survey samples by enriching recipient populations with survey-derived attributes via similarity matching and automated optimization, delivering a scalable workflow reusable across markets and survey instruments with repeatable validation patterns and clear interpretability artifacts.",
+      "tags": [
+        "wpp",
+        "faas",
+        "fusion",
+        "gcp",
+        "kubeflow",
+        "data_engineering"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "wpp_009",
+      "question": "How do you evaluate a matching or fusion pipeline?",
+      "answer_short": "I focus on distributional fidelity, slice stability, and leakage checks. The goal is that fused attributes behave like the donor survey in aggregate, and remain stable across key segments.",
+      "answer_long": "Typical checks:\n- Distributional comparisons between donor and recipient for fused variables (overall and by key slices).\n- Stability checks across segments and time where applicable.\n- Sanity checks for impossible values or unexpected shifts.\n- Auditability: preserve data maps and documentation so stakeholders understand what was fused and how.",
+      "tags": [
+        "wpp",
+        "faas",
+        "evaluation",
+        "data_quality"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "tev_001",
+      "question": "Tell me about the property image annotation system you built.",
+      "answer_short": "At Third Estate Ventures, I built an annotation system for 10,000+ property images to support preservation fund allocation. It combined CNN-based classification, clustering, and a React plus Flask workflow backed by PostgreSQL.",
+      "answer_long": "Situation: The team needed a faster way to categorize and prioritize properties using images and metadata for fund allocation decisions.\nTask: Build an end-to-end annotation and categorization workflow that reduces manual effort and improves allocation decisions.\nAction: Designed and trained CNN models for architectural features and preservation needs, implemented clustering to group similar properties, built a React front end for upload and review, built a Flask backend for workflow orchestration, and automated ingestion and preprocessing pipelines into PostgreSQL.\nResult: Improved fund allocation efficiency by 20% and reduced manual effort by 50%.",
+      "tags": [
+        "tev",
+        "computer_vision",
+        "cnn",
+        "annotation",
+        "full_stack",
+        "postgres"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "tev_002",
+      "question": "How did you structure the annotation workflow end to end?",
+      "answer_short": "I used a React front end for upload and review, a Flask backend for workflow orchestration, and automated pipelines to ingest, preprocess, and store images and labels in PostgreSQL.",
+      "answer_long": "Key pieces:\n- Front end for upload, annotation, and review (React, JavaScript, XHTML, CSS).\n- Backend services for task assignment, persistence, and model integration (Flask).\n- Data pipelines for ingestion and preprocessing at scale, with storage in PostgreSQL.\n- Model loop: train CNN and use clustering to improve categorization and prioritization.",
+      "tags": [
+        "tev",
+        "architecture",
+        "annotation",
+        "flask",
+        "react",
+        "data_pipelines"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    },
+    {
+      "id": "tev_003",
+      "question": "How did you use LLMs for real estate insight extraction?",
+      "answer_short": "I built a system that ingests documents from AWS S3, indexes them for fast retrieval using Elasticsearch, and uses LLMs via LangChain to generate concise property insights and summaries, including a mobile app front end for access.",
+      "answer_long": "Situation: Stakeholders needed faster insights from unstructured documents like descriptions, historical records, and financial files.\nTask: Create a workflow that retrieves relevant context quickly and produces usable summaries and insights.\nAction: Integrated LangChain for preprocessing and retrieval, automated ingestion from AWS S3, built Elasticsearch-based retrieval, used LLMs to generate stakeholder-tailored insights, and built a React Native mobile app for access.\nResult: Improved reporting quality by 35% and reduced data retrieval time by 50%.",
+      "tags": [
+        "tev",
+        "llm",
+        "langchain",
+        "elasticsearch",
+        "rag",
+        "mobile"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "tev_004",
+      "question": "Tell me about the preservation fund optimization algorithm.",
+      "answer_short": "I designed a linear programming optimization to allocate a $1M preservation fund across historic properties, balancing constraints and priorities, plus dashboards to communicate strategies.",
+      "answer_long": "Situation: The organization needed to maximize preservation impact within a fixed budget across many properties.\nTask: Create an optimization approach that is defensible and easy to explain to stakeholders.\nAction: Developed a linear programming model, ran sensitivity analysis to test robustness, automated the workflow from preprocessing to optimization, and built dashboards in React and Tableau to visualize allocations.\nResult: Increased preservation efficiency by 40% and produced clear allocation strategies for stakeholders.",
+      "tags": [
+        "tev",
+        "optimization",
+        "linear_programming",
+        "tableau",
+        "dashboards"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "tev_005",
+      "question": "How do you communicate optimization results to non-technical stakeholders?",
+      "answer_short": "I translate the model into inputs, constraints, and trade-offs, then use dashboards and scenario comparisons so stakeholders can see how allocations change when priorities shift.",
+      "answer_long": "- Explain objective and constraints in business language.\n- Show baseline vs scenario allocations.\n- Use sensitivity analysis to demonstrate robustness.\n- Visualize key outputs in dashboards (charts, tables, and what-if controls when feasible).",
+      "tags": [
+        "tev",
+        "communication",
+        "optimization",
+        "stakeholders"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    },
+    {
+      "id": "tev_006",
+      "question": "What is your experience with retrieval-augmented generation (RAG) in this role?",
+      "answer_short": "I implemented a RAG system for property trend analysis that combines structured market signals with unstructured property documents, using transformer-based models and serverless components for preprocessing and storage.",
+      "answer_long": "Situation: Trend analysis required combining structured and unstructured data, and manual review was slow.\nTask: Build a pipeline that retrieves relevant context and generates trend insights efficiently.\nAction: Designed a RAG pipeline using transformer models, used AWS Lambda for preprocessing, DynamoDB for storage, and a React Native UI for trend visualization.\nResult: Reduced manual trend analysis time by 50% while improving accuracy, and delivered actionable insights to clients.",
+      "tags": [
+        "tev",
+        "rag",
+        "transformers",
+        "aws",
+        "serverless"
+      ],
+      "sources": [
+        "Third_Estate_Ventures_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "cloud_001",
+      "question": "Tell me about the medical document summarization system you worked on.",
+      "answer_short": "At Cloudserve Systems, I helped build an AI system for medical document processing and summarization. I fine-tuned a BERT summarization model, implemented NER for key entity extraction, and automated pipelines to reduce manual processing by 80%.",
+      "answer_long": "Situation: Healthcare professionals needed faster ways to extract actionable insights from large volumes of unstructured medical records.\nTask: Build summarization and entity extraction workflows that scale and reduce manual effort.\nAction: Fine-tuned BERT for summarization, implemented NER for key medical entities, automated data pipelines end to end, and helped integrate results into a React-based interface for clinicians.\nResult: Reduced manual document processing times by 80% and scaled to processing 100,000+ records per month.",
+      "tags": [
+        "cloudserve",
+        "nlp",
+        "bert",
+        "ner",
+        "pipelines",
+        "aws"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "cloud_002",
+      "question": "Why did you use BERT instead of LLMs for that system?",
+      "answer_short": "The system was built before LLMs were the default, and BERT-based summarization plus NER provided a controllable, cost-effective approach with predictable latency and easier validation for sensitive medical workflows.",
+      "answer_long": "Trade-offs considered:\n- Predictable runtime and easier on-prem or managed deployment paths.\n- More deterministic behavior and simpler validation compared to free-form generation.\n- Lower cost per document at high throughput.\n- Ability to pair summarization with structured NER outputs for downstream use.",
+      "tags": [
+        "cloudserve",
+        "nlp",
+        "tradeoffs",
+        "ml_system_design"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf"
+      ]
+    },
+    {
+      "id": "cloud_003",
+      "question": "Tell me about the hybrid recommender system you built.",
+      "answer_short": "I engineered a hybrid recommender system for a Chromium-based browser news section by combining collaborative filtering and content-based filtering, improving accuracy and engagement while integrating with a React UI and efficient backend pipelines.",
+      "answer_long": "Situation: The browser news section needed a robust personalization system for article recommendations.\nTask: Design and integrate a hybrid recommender that improves personalization without hurting performance.\nAction: Built CF plus CBF pipelines, integrated recommendations into a React UI, refactored backend components in C++ and Python for real-time feeds, and optimized performance by removing redundant code.\nResult: Increased engagement by 30% and reduced page load time by 40%.",
+      "tags": [
+        "cloudserve",
+        "recsys",
+        "hybrid",
+        "cf",
+        "cbf",
+        "performance"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "cloud_004",
+      "question": "How did you evaluate the recommender system?",
+      "answer_short": "I tracked engagement and latency outcomes such as time spent in the news section, conversion-related signals, accuracy improvements, and page load time, while validating that recommendations matched user interests.",
+      "answer_long": "Evaluation signals included:\n- Engagement metrics (time spent, repeat usage of the news section).\n- System metrics (latency and page load time).\n- Offline diagnostics for recommendation relevance and diversity where applicable.",
+      "tags": [
+        "cloudserve",
+        "recsys",
+        "evaluation",
+        "metrics"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf"
+      ]
+    },
+    {
+      "id": "cloud_005",
+      "question": "Tell me about the disease progression forecasting project.",
+      "answer_short": "I developed predictive models in healthcare using algorithms like Random Forest and XGBoost, built preprocessing pipelines, and delivered a Flask plus React interface for clinicians to interpret risk predictions.",
+      "answer_long": "Situation: A healthcare provider needed to identify high-risk patients and forecast disease progression from patient histories.\nTask: Build models that are accurate and usable in clinical workflows.\nAction: Trained and tuned Random Forest and XGBoost models, built data pipelines for preprocessing, collaborated with domain experts on requirements, and delivered a Flask plus React UI to surface predictions.\nResult: Reduced manual effort by 70% and identified high-risk patients with over 90% accuracy in reported results.",
+      "tags": [
+        "cloudserve",
+        "ml",
+        "healthcare",
+        "xgboost",
+        "random_forest",
+        "full_stack"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf"
+      ]
+    },
+    {
+      "id": "cloud_006",
+      "question": "Tell me about the website migration project and what you learned.",
+      "answer_short": "I led a migration from WordPress to a Next.js and GraphQL stack to improve performance and maintainability, refactoring 4,000+ lines of redundant code and improving load times.",
+      "answer_long": "Situation: The existing WordPress setup had performance and scalability limitations.\nTask: Migrate to a modern stack while improving performance and reducing technical debt.\nAction: Spearheaded the migration to Next.js with GraphQL and Gatsby patterns, refactored redundant code, and collaborated with designers to optimize UX across devices.\nResult: Achieved a 50% reduction in load times and improved overall site performance by 40%.",
+      "tags": [
+        "cloudserve",
+        "web",
+        "nextjs",
+        "graphql",
+        "migration",
+        "performance"
+      ],
+      "sources": [
+        "Cloudserve_Projects.pdf"
+      ]
+    },
+    {
+      "id": "skills_001",
+      "question": "What is your strongest technical area?",
+      "answer_short": "My strongest area is building production data and ML systems that are governed and scalable, especially where SQL pipelines, feature engineering, and ML workflows need to be reliable and auditable.",
+      "answer_long": "I am strongest when I can combine:\n- Data modeling and SQL pipeline design (Snowflake, BigQuery).\n- ML workflow execution (feature engineering, training, evaluation, batch scoring).\n- Product-oriented engineering (Dash and Streamlit UIs, APIs, and user feedback loops).\n- GenAI patterns that remain safe and grounded (RAG, allowlisting, human approval).",
+      "tags": [
+        "skills",
+        "strengths"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "skills_002",
+      "question": "What programming languages and tools do you use most?",
+      "answer_short": "I work primarily in Python and SQL for ML and data, and I use Dash and Streamlit for internal tools. I also have experience with JavaScript and TypeScript, React, Docker, Kubernetes, and GCP tooling like Kubeflow.",
+      "answer_long": "Most used:\n- Python, SQL\n- Snowflake, BigQuery\n- Dash, Streamlit\n- LangChain for controlled GenAI workflows\n- Docker, Kubernetes, Kubeflow for execution and orchestration",
+      "tags": [
+        "skills",
+        "tooling"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "skills_003",
+      "question": "How do you approach feature engineering at scale?",
+      "answer_short": "I keep feature engineering close to the warehouse where possible, standardize joins and time windows, document transformations, and validate features through diagnostics and stability checks.",
+      "answer_long": "Approach:\n- Push heavy aggregations and filtering into the warehouse (Snowflake SQL patterns).\n- Standardize feature windows and joins to avoid leakage and comparability issues.\n- Build reusable transformation utilities and document each feature definition.\n- Validate with slice-based checks and model diagnostics (importance, error analysis).",
+      "tags": [
+        "ml",
+        "feature_engineering",
+        "scale"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "beh_001",
+      "question": "Tell me about a time you reduced manual work for a team.",
+      "answer_short": "At WPP Media, I replaced manual audience-building SQL with a guided workflow that generates validated SQL. At Third Estate Ventures, I built an annotation system that reduced manual effort by 50% for property image processing.",
+      "answer_long": "Example 1 (WPP Media):\n- Built a Dash rule builder and deterministic SQL compiler with validation guardrails.\n- Reduced time-to-first-audience and profiling iterations from 30 to 60+ minutes manually to under about 10 minutes.\n\nExample 2 (Third Estate Ventures):\n- Built an image annotation system for 10,000+ images with CNNs, clustering, and a React plus Flask workflow.\n- Reduced manual effort by 50% and improved fund allocation efficiency by 20%.",
+      "tags": [
+        "behavioral",
+        "impact",
+        "automation"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "beh_002",
+      "question": "Describe a time you had to balance speed and correctness.",
+      "answer_short": "In audience creation, speed matters, but incorrect joins or windows can produce wrong audiences. I prioritized deterministic compilation and validation guardrails so speed improvements did not come at the cost of correctness.",
+      "answer_long": "Situation: Audience creation needed to be fast and accessible, but errors could change business outcomes.\nTask: Reduce iteration time while preserving governance and trust.\nAction: Built deterministic SQL generation with validation guardrails and compared outputs against trusted manual SQL. Added allowlists and human approval for risky text-to-SQL execution.\nResult: Improved turnaround time and kept outputs auditable and consistent.",
+      "tags": [
+        "behavioral",
+        "tradeoffs",
+        "quality"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "beh_003",
+      "question": "How do you work with stakeholders who are not highly technical?",
+      "answer_short": "I focus on making outputs auditable and explainable: clear UI flows, readable summaries grounded in deterministic outputs, and dashboards that show the trade-offs and assumptions behind the numbers.",
+      "answer_long": "- Start with the decision the stakeholder needs to make, then map it back to data and constraints.\n- Provide guardrails and defaults so the workflow produces sensible outputs without deep technical knowledge.\n- Use dashboards and summaries to communicate results and uncertainty.\n- Preserve documentation and data maps so outputs are easy to interpret later.",
+      "tags": [
+        "behavioral",
+        "communication",
+        "stakeholders"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    },
+    {
+      "id": "beh_004",
+      "question": "Tell me about a time you introduced a new technology responsibly.",
+      "answer_short": "I introduced GenAI features with governance at WPP Media by using dataset allowlisting and human approval for text-to-SQL execution, and by grounding narrative summaries on deterministic charts instead of free-form generation.",
+      "answer_long": "Situation: GenAI can increase productivity but can also erode trust if outputs are not grounded and controlled.\nTask: Add GenAI value without increasing operational risk.\nAction: Co-owned a gated text-to-SQL pilot with strict dataset allowlisting and human approval, and created prompt templates per visualization type to generate grounded narrative summaries.\nResult: Enabled more complex requests and improved usability while preserving governance and trust.",
+      "tags": [
+        "behavioral",
+        "genai",
+        "governance"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "sys_001",
+      "question": "How would you design a governed text-to-SQL feature?",
+      "answer_short": "I would use allowlisted datasets, strong schema grounding, deterministic post-processing, and a human approval step for execution, with full logging and evaluation on a test suite of queries.",
+      "answer_long": "Design principles I have used in practice:\n- Dataset allowlisting and schema grounding, so the model only reasons over approved tables and columns.\n- Separation of concerns: free-form intent parsing, then constrained SQL generation.\n- Validation and policy checks before any execution (joins, windows, operator allowlist).\n- Human approval for high-risk or long-tail queries.\n- Logging and evaluation using a fixed benchmark set of natural language questions with expected outputs.",
+      "tags": [
+        "system_design",
+        "text_to_sql",
+        "governance",
+        "llm"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "sys_002",
+      "question": "How would you reduce hallucinations in a portfolio chatbot?",
+      "answer_short": "I would use a curated interview Q&A bank plus RAG over vetted documents, then enforce an evidence-only response policy with claim-level validation and refusal when facts are missing.",
+      "answer_long": "Practical approach:\n- Add a curated interview Q&A knowledge base for common questions with vetted answers.\n- Use retrieval-first routing with confidence thresholds.\n- Make the LLM rephrase and stitch together retrieved content, and explicitly forbid new facts.\n- Add a simple fact-check step that flags any claim not supported by retrieved text.",
+      "tags": [
+        "system_design",
+        "rag",
+        "portfolio_bot",
+        "quality"
+      ],
+      "sources": [
+        "portfolio app content (projects/pages)",
+        "WPP_Media_Projects.pdf",
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "pub_001",
+      "question": "Tell me about your publication on recommendation systems.",
+      "answer_short": "I co-authored a publication on a weighted hybrid recommendation system that combines SVD and cosine similarity, presented at icSoftComp 2021 and published in Springer proceedings.",
+      "answer_long": "Summary:\n- Goal: improve personalization and diversity while reducing weaknesses of pure CF and pure content-based methods.\n- Approach: weighted hybrid model combining SVD-based components with cosine similarity.\n- Outcome: published in Springer conference proceedings (icSoftComp 2021).",
+      "tags": [
+        "publication",
+        "recsys",
+        "research"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "content/publications/publications.json (project repo)"
+      ]
+    },
+    {
+      "id": "pub_002",
+      "question": "Tell me about your coin classification research project.",
+      "answer_short": "I worked as a research assistant on classifying Indian currency coins from cellphone images using deep neural networks, achieving 97% accuracy despite denominations having similar size and appearance.",
+      "answer_long": "Highlights:\n- Problem: distinguish coin denominations with subtle visual differences using low-cost phone camera images.\n- Approach: deep neural network classifier with careful dataset capture and preprocessing.\n- Result: achieved 97% accuracy and published as Machine Vision Using Cellphone Camera: Classification of Indian Coins (M2VIP 2022).",
+      "tags": [
+        "publication",
+        "computer_vision",
+        "research"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "edu_001",
+      "question": "What is your educational background?",
+      "answer_short": "I have an MS in Computer Science from Stevens Institute of Technology (January 2024) and a BTech in Information and Communication Technology from Ahmedabad University (May 2022).",
+      "answer_long": "- Stevens Institute of Technology, MS in Computer Science, January 2024\n- Ahmedabad University, BTech in Information and Communication Technology, May 2022",
+      "tags": [
+        "education"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "log_001",
+      "question": "Where are you based and are you open to relocation?",
+      "answer_short": "I am based in Jersey City, NJ. For relocation, I typically discuss it based on the role and team needs.",
+      "answer_long": "I am based in Jersey City, NJ. Relocation preferences depend on the role, and I can align with team needs after understanding the expectations and work model.",
+      "tags": [
+        "logistics",
+        "location"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf"
+      ]
+    },
+    {
+      "id": "wpp_010",
+      "question": "What was the biggest technical challenge in building the audience platform?",
+      "answer_short": "The biggest challenge was ensuring correctness at scale: preventing join fan-out, enforcing consistent time windows, and keeping rule semantics stable, all while making the system usable through a guided UI.",
+      "answer_long": "Situation: Audience definitions had to be consistent and trustworthy across very large datasets.\nTask: Prevent subtle SQL issues that change audience membership while keeping UX simple.\nAction: Standardized SQL generation patterns, built deterministic compilation for nested logic, and added validation guardrails and policy-aware checks. Partnered with analysts on comparisons against trusted manual SQL for edge cases.\nResult: Improved consistency of outputs and reduced iteration time without losing governance.",
+      "tags": [
+        "wpp",
+        "challenge",
+        "sql",
+        "scale",
+        "quality"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_011",
+      "question": "How did you improve analyst throughput?",
+      "answer_short": "I reduced ad-hoc query time by integrating a gated text-to-SQL agent for complex long-tail requests and by standardizing audience creation through a guided workflow that generates validated SQL.",
+      "answer_long": "- Guided workflow: rule builder plus deterministic SQL compiler reduces repeated manual work.\n- Gated text-to-SQL: handles complex requests with dataset allowlisting and human approval.\n- Result: the resume notes a 90% reduction in ad-hoc query time for text-to-SQL workflows.",
+      "tags": [
+        "wpp",
+        "productivity",
+        "text_to_sql"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "wpp_012",
+      "question": "How do you ensure LLM summaries for charts remain grounded?",
+      "answer_short": "I generate summaries from deterministic inputs: chart data, computed statistics, and preformatted tables, then use visualization-specific prompt templates and forbid introducing facts not present in those inputs.",
+      "answer_long": "Grounding pattern:\n- Provide the LLM only the chart or table inputs and computed highlights.\n- Use a prompt template tailored to the visualization type.\n- Require the model to only describe what is present, and to state when something is not available.\n- Optionally run a second pass that flags any claim not supported by the provided inputs.",
+      "tags": [
+        "wpp",
+        "llm",
+        "summarization",
+        "grounding"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "int_001",
+      "question": "What are your key strengths?",
+      "answer_short": "My strengths are: building governed data products, strong SQL and feature engineering at scale, pragmatic GenAI integration with safety, and end-to-end delivery from pipeline to UI.",
+      "answer_long": "- Governed data products: deterministic generation, validation, and auditability.\n- Scale: Snowflake SQL patterns for large datasets and repeatable feature pipelines.\n- Pragmatic GenAI: allowlisting, grounding, and human approval where needed.\n- Delivery: Dash and Streamlit UIs that make complex workflows usable for teams.",
+      "tags": [
+        "interview",
+        "strengths"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "int_002",
+      "question": "What is a weakness you are working on?",
+      "answer_short": "I try to avoid over-optimizing too early. I have been improving by time-boxing early iterations and using lightweight benchmarks before deeper optimization.",
+      "answer_long": "I focus on shipping correct, useful versions quickly, then iterating with real usage data. To keep that balance, I time-box early designs and add small benchmarks and correctness tests before investing heavily in optimizations.",
+      "tags": [
+        "interview",
+        "behavioral"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf"
+      ]
+    },
+    {
+      "id": "int_003",
+      "question": "Why are you interested in this role?",
+      "answer_short": "I look for roles where I can build production ML systems with clear user impact, especially workflows that combine large-scale data, modeling, and user-facing tools, similar to the audience and insights platforms I have built.",
+      "answer_long": "I am interested in roles where:\n- ML connects directly to product workflows and measurable outcomes.\n- Data scale and governance matter.\n- There is room to apply both classic ML and careful GenAI patterns.",
+      "tags": [
+        "interview",
+        "motivation"
+      ],
+      "sources": [
+        "Sanket_Shah_Resume.pdf",
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    },
+    {
+      "id": "int_004",
+      "question": "How do you handle ambiguity?",
+      "answer_short": "I start by defining the decision the user needs to make, then break the work into a smallest correct version with explicit assumptions, validation checks, and an iteration plan driven by feedback.",
+      "answer_long": "Steps:\n- Clarify the decision and success criteria.\n- Write down assumptions and constraints early.\n- Build a minimal correct workflow with guardrails and logging.\n- Iterate using stakeholder feedback and measured outcomes.",
+      "tags": [
+        "behavioral",
+        "process"
+      ],
+      "sources": [
+        "WPP_Media_Projects.pdf",
+        "Third_Estate_Ventures_Projects.pdf"
+      ]
+    }
+  ]
+}
