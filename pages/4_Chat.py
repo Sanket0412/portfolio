@@ -22,7 +22,14 @@ import pytz
 #from components.llm.chain import build_rag_chain
 #User constants
 PERSONA_NAME = "Sanket J Shah"
-#PROFILE_PDFS_CONTEXT = load_profile_pdfs_context()
+# Chat avatars (emoji or image path/URL)
+USER_AVATAR = None
+ASSISTANT_AVATAR = "https://avatars.githubusercontent.com/u/68991626?v=4"  # put your image here (or use an https URL)
+def _avatar_for_role(role: str):
+    # Return None to use Streamlit default avatar
+    if role == "user":
+        return None
+    return ASSISTANT_AVATAR
 #PERSONA_SUMMARY = _load_persona_context()
 # First Streamlit call
 st.set_page_config(page_title="Chat with Sanket", page_icon="💬", layout="wide")
@@ -257,8 +264,9 @@ st.caption(
 # Chat UI
 # =========================
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    role = message.get("role", "assistant")
+    with st.chat_message(role, avatar=_avatar_for_role(role)):
+        st.markdown(message.get("content", ""))
 
 if prompt := st.chat_input("Ask me about my work, projects, or experience..."):
     if not _rate_limit_ok():
@@ -271,49 +279,51 @@ if prompt := st.chat_input("Ask me about my work, projects, or experience..."):
             "I cannot help with that request. "
             "If you have questions about my background, projects, or experience, ask away."
         )
+
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": safe_reply})
-        with st.chat_message("user"):
+
+        with st.chat_message("user", avatar=_avatar_for_role("user")):
             st.markdown(prompt)
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant", avatar=_avatar_for_role("assistant")):
             st.markdown(safe_reply)
         st.stop()
 
-    # =========================
-    # Fast-path bypasses (no RAG)
-    # =========================
+    # Fast-path greeting
     if _is_greeting(prompt):
         answer = "Hello! Feel free to ask me about my projects, experience, or publications."
+
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        with st.chat_message("user"):
+
+        with st.chat_message("user", avatar=_avatar_for_role("user")):
             st.markdown(prompt)
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant", avatar=_avatar_for_role("assistant")):
             st.markdown(answer)
         st.stop()
 
+    # Memory-like prompt
     if _is_memory_like(prompt):
         answer = (
             "I cannot store personal preferences or remember details across sessions. "
             "If you have questions about my background, skills, or projects, feel free to ask."
         )
+
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        with st.chat_message("user"):
+
+        with st.chat_message("user", avatar=_avatar_for_role("user")):
             st.markdown(prompt)
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant", avatar=_avatar_for_role("assistant")):
             st.markdown(answer)
         st.stop()
 
-    # =========================
     # Normal chat (RAG)
-    # =========================
     st.session_state.messages.append({"role": "user", "content": prompt})
-
-    with st.chat_message("user"):
+    with st.chat_message("user", avatar=_avatar_for_role("user")):
         st.markdown(prompt)
 
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar=_avatar_for_role("assistant")):
         with st.spinner("Thinking..."):
             try:
                 answer = _run_chat(prompt).strip()
@@ -322,17 +332,14 @@ if prompt := st.chat_input("Ask me about my work, projects, or experience..."):
             except Exception as e:
                 answer = f"Sorry, I ran into an error while responding: {type(e).__name__}: {e}"
 
-            # Output guardrails
             answer = _redact_secrets(answer)
 
-            # Hard cap response size (public site)
             if len(answer) > 3500:
                 answer = answer[:3500].rstrip() + "\n\n(Truncated for length.)"
 
             st.markdown(answer)
 
     st.session_state.messages.append({"role": "assistant", "content": answer})
-
 
 
 # =========================
@@ -345,5 +352,5 @@ with st.sidebar:
     if st.button("🗑️ Clear Chat", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
-    # pages/4_Chat.py (inside with st.sidebar:)
+
 
