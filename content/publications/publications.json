@@ -16,7 +16,7 @@
       "abstract": "Indian currency coins come in a variety of denominations. Among them ₹1, ₹2, and ₹5 have similar diameters and many ₹1 and ₹2 designs look nearly identical except for the numerals on the reverse side, which makes denomination recognition hard from the obverse. We hypothesized that images captured by inexpensive cellphone cameras would be sufficient to classify coin denomination using deep neural networks. Four architectures were compared based on preliminary analysis, and results show that two of the four can classify the correct denomination from either side of a coin with about 97% accuracy.",
       "doi": "10.1109/M2VIP55626.2022.10041089",
       "url": "https://ieeexplore.ieee.org/document/10041089",
-      "citations": 4,
+      "citations": 5,
       "cover_image": "content/covers/coin-vision.jpg"
     },
     {
@@ -33,7 +33,7 @@
       "abstract": "This paper proposes a weighted hybrid recommendation system that combines model based collaborative filtering using SVD with content based filtering using cosine similarity. The approach is designed to reduce the cold start limitations of each method while improving personalization and diversity. Experiments indicate that the proposed hybrid outperforms standalone CF, standalone CBF, and a cascaded hybrid on personalization and diversity metrics, while also alleviating the new item cold start problem.",
       "doi": "10.1007/978-3-031-05767-0_29",
       "url": "https://link.springer.com/chapter/10.1007/978-3-031-05767-0_29",
-      "citations": 1,
+      "citations": 4,
       "cover_image": "content/covers/hybrid-recsys.jpg"
     }
   ]
