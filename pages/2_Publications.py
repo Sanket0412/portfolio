@@ -16,7 +16,6 @@ with st.sidebar:
     render_sidebar_profile(show_env=True)
 DATA_PATH = Path("content/publications/publications.json")
 
-@st.cache_data(ttl=86400)  # cache for 1 day
 def load_publications() -> List[Dict[str, Any]]:
     if DATA_PATH.exists():
         try:
@@ -90,15 +89,11 @@ def pub_card(pub: Dict[str, Any]):
             st.write(abstract.strip())
 
         # Actions
-        st.write("")
-        bcols = st.columns([0.2, 0.2, 0.6])
-        with bcols[0]:
-            if pub.get("url"):
-                st.link_button("Read paper", pub["url"], use_container_width=True)
-        with bcols[1]:
-            doi = pub.get("doi")
-            if doi:
-                st.link_button("Cite (DOI)", f"https://doi.org/{doi}", use_container_width=True)
+        url = (pub.get("url") or "").strip()
+        if url:
+            st.write("")
+            st.link_button("Read paper", url, use_container_width=True)
+
 
 st.title("Publications")
 #st.caption("Auto populated from Crossref and OpenAlex. Cards show title, venue, authors, date, abstract, and links.")

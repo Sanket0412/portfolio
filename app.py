@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 with st.sidebar:
-    render_sidebar_profile(show_env=True)
+    render_sidebar_profile(show_env=False)
 # Load environment variables
 load_dotenv()
 
