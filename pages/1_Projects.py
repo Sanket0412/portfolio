@@ -1,8 +1,15 @@
 import streamlit as st
 from components.project_cards import render_project_grid
+from components.theme import apply_dark_theme
 
 st.set_page_config(page_title="Projects", page_icon="🧩", layout="wide")
-
+# apply_dark_theme(
+#     page_bg="#000000",
+#     sidebar_bg="#000724",  # pick your sidebar color here
+#     input_bg="#000724",
+#     button_bg="#000724",
+#     button_bg_hover="#06408e"
+# )
 from components.navbar import render_sidebar_profile
 from components.config.bootstrap import *
 with st.sidebar:
@@ -70,9 +77,9 @@ A video summarization pipeline that takes a user uploaded video and returns a cu
         },
     },
     {   # TODO: Add content
-        "title": "LLM RAG Portfolio Chat",
+        "title": "CloneAMA - LLM RAG Portfolio Chat",
         "slug": "llm-rag-portfolio-chat",
-        "image": "content/covers/PortfolioChat.png",
+        "image": "content/covers/CloneAMA.png",
         "summary": "Chat that answers as Sanket using retrieval over your portfolio content and PDFs.",
         "description": """
 **What it is**  

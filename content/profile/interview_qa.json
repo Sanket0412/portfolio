@@ -59,7 +59,7 @@
       "id": "wpp_001",
       "question": "Walk me through the Audience Creation module you built.",
       "answer_short": "I built the Audience Creation module as a governed workflow: a Dash UI rule builder feeds a deterministic SQL compiler that produces validated Snowflake SQL for nested AND/OR audience definitions, with guardrails to prevent invalid or unsafe queries.",
-      "answer_long": "Situation: Manual audience SQL was inconsistent and hard to reuse, and it did not scale for less SQL-heavy users.\nTask: Create a guided, auditable workflow for defining audiences that stays correct across joins, time windows, and policies.\nAction: Implemented a rule builder UI, a deterministic SQL compiler for nested logic, safe SQL generation patterns for high-cardinality filters and joins, and validation guardrails that enforce allowed operators and policy-aware feature usage. Co-owned a gated text-to-SQL pilot for long-tail requests with strict dataset allowlisting and human approval.\nResult: Enabled guided audience creation and reduced iteration time, while standardizing logic so similar questions produce comparable audiences.",
+      "answer_long": "Situation: Manual audience SQL was inconsistent and hard to reuse, and it did not scale for less SQL-heavy users.\nTask: Create a guided, auditable workflow for defining audiences that stays correct across joins, time windows, and policies.\nAction: Implemented a rule builder UI, a deterministic SQL compiler for nested logic, safe SQL generation patterns for high-cardinality filters and joins, and validation guardrails that enforce allowed operators and policy-aware feature usage. \nResult: Enabled guided audience creation and reduced iteration time, while standardizing logic so similar questions produce comparable audiences.",
       "tags": [
         "wpp",
         "audience_creation",
@@ -92,7 +92,7 @@
       "id": "wpp_003",
       "question": "What guardrails did you implement to prevent incorrect audiences?",
       "answer_short": "I added validation layers that enforce consistent joins, time windows, allowed operators, and policy-aware feature usage so invalid or unsafe queries are blocked before execution.",
-      "answer_long": "Guardrails included:\n- Join consistency checks so the audience definition does not unintentionally change grain or duplicate records.\n- Time window enforcement to keep filters comparable and avoid accidental leakage across periods.\n- Operator allowlisting and type checks (for example, numeric comparisons only on numeric features).\n- Policy-aware rules to prevent disallowed feature usage patterns.\n- For the text-to-SQL pilot, strict dataset allowlisting and human approval before execution.",
+      "answer_long": "Guardrails included:\n- Join consistency checks so the audience definition does not unintentionally change grain or duplicate records.\n- Time window enforcement to keep filters comparable and avoid accidental leakage across periods.\n- Operator allowlisting and type checks (for example, numeric comparisons only on numeric features).\n- Policy-aware rules to prevent disallowed feature usage patterns.",
       "tags": [
         "wpp",
         "governance",
@@ -101,23 +101,6 @@
       ],
       "sources": [
         "WPP_Media_Projects.pdf"
-      ]
-    },
-    {
-      "id": "wpp_004",
-      "question": "How did you integrate an LLM into the workflow safely?",
-      "answer_short": "I used gating and constraints: the LLM was only used for long-tail text-to-SQL requests and for narrative summaries on top of deterministic charts, with allowlisted datasets and human approval for execution.",
-      "answer_long": "Situation: Some analyst requests exceeded the expressiveness of rule-based filters and required complex SQL patterns.\nTask: Enable long-tail requests without sacrificing governance and trust.\nAction: Co-owned a gated text-to-SQL pilot with strict dataset allowlisting and a human approval step before execution. Separately, introduced LLM-assisted chart summaries using prompt templates per visualization type, grounded on deterministic outputs instead of free-form speculation.\nResult: Supported more complex requests while keeping execution auditable, and improved accessibility of profiling results with concise summaries.",
-      "tags": [
-        "wpp",
-        "llm",
-        "text_to_sql",
-        "safety",
-        "governance"
-      ],
-      "sources": [
-        "WPP_Media_Projects.pdf",
-        "Sanket_Shah_Resume.pdf"
       ]
     },
     {
@@ -465,7 +448,7 @@
       "id": "beh_002",
       "question": "Describe a time you had to balance speed and correctness.",
       "answer_short": "In audience creation, speed matters, but incorrect joins or windows can produce wrong audiences. I prioritized deterministic compilation and validation guardrails so speed improvements did not come at the cost of correctness.",
-      "answer_long": "Situation: Audience creation needed to be fast and accessible, but errors could change business outcomes.\nTask: Reduce iteration time while preserving governance and trust.\nAction: Built deterministic SQL generation with validation guardrails and compared outputs against trusted manual SQL. Added allowlists and human approval for risky text-to-SQL execution.\nResult: Improved turnaround time and kept outputs auditable and consistent.",
+      "answer_long": "Situation: Audience creation needed to be fast and accessible, but errors could change business outcomes.\nTask: Reduce iteration time while preserving governance and trust.\nAction: Built deterministic SQL generation with validation guardrails and compared outputs against trusted manual SQL.\nResult: Improved turnaround time and kept outputs auditable and consistent.",
       "tags": [
         "behavioral",
         "tradeoffs",
@@ -488,35 +471,6 @@
       "sources": [
         "WPP_Media_Projects.pdf",
         "Third_Estate_Ventures_Projects.pdf"
-      ]
-    },
-    {
-      "id": "beh_004",
-      "question": "Tell me about a time you introduced a new technology responsibly.",
-      "answer_short": "I introduced GenAI features with governance at WPP Media by using dataset allowlisting and human approval for text-to-SQL execution, and by grounding narrative summaries on deterministic charts instead of free-form generation.",
-      "answer_long": "Situation: GenAI can increase productivity but can also erode trust if outputs are not grounded and controlled.\nTask: Add GenAI value without increasing operational risk.\nAction: Co-owned a gated text-to-SQL pilot with strict dataset allowlisting and human approval, and created prompt templates per visualization type to generate grounded narrative summaries.\nResult: Enabled more complex requests and improved usability while preserving governance and trust.",
-      "tags": [
-        "behavioral",
-        "genai",
-        "governance"
-      ],
-      "sources": [
-        "WPP_Media_Projects.pdf"
-      ]
-    },
-    {
-      "id": "sys_001",
-      "question": "How would you design a governed text-to-SQL feature?",
-      "answer_short": "I would use allowlisted datasets, strong schema grounding, deterministic post-processing, and a human approval step for execution, with full logging and evaluation on a test suite of queries.",
-      "answer_long": "Design principles I have used in practice:\n- Dataset allowlisting and schema grounding, so the model only reasons over approved tables and columns.\n- Separation of concerns: free-form intent parsing, then constrained SQL generation.\n- Validation and policy checks before any execution (joins, windows, operator allowlist).\n- Human approval for high-risk or long-tail queries.\n- Logging and evaluation using a fixed benchmark set of natural language questions with expected outputs.",
-      "tags": [
-        "system_design",
-        "text_to_sql",
-        "governance",
-        "llm"
-      ],
-      "sources": [
-        "WPP_Media_Projects.pdf"
       ]
     },
     {
@@ -603,21 +557,6 @@
         "quality"
       ],
       "sources": [
-        "WPP_Media_Projects.pdf"
-      ]
-    },
-    {
-      "id": "wpp_011",
-      "question": "How did you improve analyst throughput?",
-      "answer_short": "I reduced ad-hoc query time by integrating a gated text-to-SQL agent for complex long-tail requests and by standardizing audience creation through a guided workflow that generates validated SQL.",
-      "answer_long": "- Guided workflow: rule builder plus deterministic SQL compiler reduces repeated manual work.\n- Gated text-to-SQL: handles complex requests with dataset allowlisting and human approval.\n- Result: the resume notes a 90% reduction in ad-hoc query time for text-to-SQL workflows.",
-      "tags": [
-        "wpp",
-        "productivity",
-        "text_to_sql"
-      ],
-      "sources": [
-        "Sanket_Shah_Resume.pdf",
         "WPP_Media_Projects.pdf"
       ]
     },
