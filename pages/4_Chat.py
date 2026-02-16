@@ -10,16 +10,13 @@ from uuid import uuid4
 
 from components.config.bootstrap import *  # noqa: F401,F403
 from components.config.secrets import require_secret, get_secret
-from components.llm import profile_context
 from components.navbar import render_sidebar_profile
-#from components.llm.profile_context import load_profile_pdfs_context, _load_persona_context
-#from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-#from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from components.llm.chain import build_rag_chain_with_history
 from datetime import datetime 
 import pytz
-#from components.llm.chain import build_rag_chain
+from components.theme import apply_dark_theme
+
 #User constants
 PERSONA_NAME = "Sanket J Shah"
 # Chat avatars (emoji or image path/URL)
@@ -33,7 +30,13 @@ def _avatar_for_role(role: str):
 #PERSONA_SUMMARY = _load_persona_context()
 # First Streamlit call
 st.set_page_config(page_title="Chat with Sanket", page_icon="💬", layout="wide")
-
+# apply_dark_theme(
+#     page_bg="#000000",
+#     sidebar_bg="#000724",  # pick your sidebar color here
+#     input_bg="#000724",
+#     button_bg="#000724",
+#     button_bg_hover="#06408e"
+# )
 #st.write("OPENAI_API_KEY available (env or secrets):", bool(get_secret("OPENAI_API_KEY")))
 
 with st.sidebar:
@@ -253,7 +256,7 @@ if "session_id" not in st.session_state:
 # =========================
 # Header
 # =========================
-st.title("💬 Chat with Sanket")
+st.title("CloneAMA - 💬 Chat with Sanket")
 st.caption(
     "Ask me anything about my background, projects, publications, or experience. "
     "I'll answer as Sanket using retrieved portfolio context."
