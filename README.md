@@ -1,40 +1,36 @@
-# 🧠 Sanket Shah – AI-Powered Portfolio
+# Sanket Shah - AI-Powered Portfolio
 
-An interactive, AI-powered personal portfolio built with Streamlit, featuring projects, publications, experience, and a RAG-based chatbot that answers questions as Sanket Shah using curated portfolio content, resume, and LinkedIn PDFs.
+An interactive portfolio built with Streamlit, featuring Projects, Publications, Experience, and a RAG-based chatbot (CloneAMA) that answers questions in my voice using only curated portfolio sources.
 
----
+## Features
 
-## ✨ Features
+### Projects
+- Modular project cards with rich descriptions, tags, and external links
+- Easy to extend by editing the Projects page content
 
-### 🧩 Projects
-- Modular project cards with modal dialogs
-- Rich descriptions, tags, and external links
-- Easily extensible via Python dictionaries
-
-### 📄 Publications
+### Publications
 - Auto-rendered publication cards
-- Metadata support: venue, authors, abstract, citations
-- Backed by a structured JSON source
+- Structured JSON-backed metadata (venue, authors, abstract, citations)
 
-### 💼 Experience
-- Timeline-style professional experience cards
-- Emphasis on impact, scale, and technologies
+### Experience
+- Timeline-style experience cards
+- Focus on impact, scale, and technologies
 
-### 💬 AI Chatbot (RAG)
-- Chat interface that impersonates Sanket Shah
-- Retrieval over resume, LinkedIn, and persona summary
-- Chat-history aware
-- Guardrails to prevent hallucinations
+### AI Chatbot (RAG) - CloneAMA
+- Chat interface that answers as Sanket J Shah
+- Retrieval over curated documents (resume, LinkedIn, project PDFs, persona summary)
+- History-aware question rewriting to reduce drift
+- Guardrails to reduce hallucinations and block prompt injection attempts
 
----
-📐 **System Design & Architecture**  
-See [ARCHITECTURE.md](ARCHITECTURE.md) for a detailed breakdown of the RAG pipeline, chatbot design, and system tradeoffs.
+## System Design and Architecture
 
-## 🏗️ Project Structure
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the end-to-end RAG pipeline, prompting strategy, security notes, and tradeoffs.
 
-```
+## Project Structure
+
+```text
 Portfolio/
-├── app.py
+├── Home.py
 ├── pages/
 │   ├── 1_Projects.py
 │   ├── 2_Publications.py
@@ -43,6 +39,7 @@ Portfolio/
 ├── components/
 │   ├── navbar.py
 │   ├── project_cards.py
+│   ├── theme.py
 │   ├── llm/
 │   │   ├── chain.py
 │   │   └── rag.py
@@ -54,24 +51,59 @@ Portfolio/
 │   │   ├── linkedin.pdf
 │   │   ├── resume.pdf
 │   │   └── summary.txt
-│   ├── publications/
-│   │   └── publications.json
+│   ├── persona/
+│   │   └── interview_qa.json (optional)
+│   ├── projects/
+│   │   ├── WPP_Media_Projects.pdf (optional but supported)
+│   │   ├── Third_Estate_Ventures_Projects.pdf (optional but supported)
+│   │   └── Cloudserve_Projects.pdf (optional but supported)
+│   └── publications/
+│       └── publications.json
 ├── scripts/
 │   └── fetch_publications.py
-└── README.md
+├── README.md
+├── ARCHITECTURE.md
+├── requirements.txt
+└── requirements-dev.txt
 ```
 
----
+## Running Locally
 
-## 🚀 Running Locally
-
+### 1) Install dependencies
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
 ```
 
----
+### 2) Set API keys
 
-## 👤 Author 
-**Sanket J Shah**  
-Data Scientist | ML Engineer | GenAI 
+Option A: Streamlit secrets (recommended)
+
+1. Copy the example secrets file:
+```bash
+cp .streamlit/secrets.toml.example .streamlit/secrets.toml
+```
+
+2. Edit `.streamlit/secrets.toml` and set:
+- OPENAI_API_KEY
+
+Option B: .env (works locally)
+Create a `.env` in the repo root and set:
+```bash
+OPENAI_API_KEY=your_key_here
+```
+
+### 3) Run the app
+```bash
+streamlit run Home.py
+```
+
+## Deployment (Streamlit Community Cloud)
+
+- Deploy the repo on Streamlit Community Cloud.
+- Add OPENAI_API_KEY under App Settings -> Secrets.
+- Do not commit `.streamlit/secrets.toml`.
+
+## Author
+
+Sanket J Shah  
+Data Scientist | ML Engineer | GenAI
