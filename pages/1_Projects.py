@@ -8,57 +8,71 @@ from components.config.bootstrap import *
 with st.sidebar:
     render_sidebar_profile(show_env=True)
 
+
 # ----------------------------
 # Projects data
 # ----------------------------
 PROJECTS = [
-    {   # TODO: Add content
-        "title": "Audience Creation Agent",
-        "slug": "audience-creation-agent",
-        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-        "summary": "Agentic text to SQL system that generates, validates, and executes audience queries on billions of rows.",
+        {
+        "title": "Echos: Learn and Translate ASL",
+        "slug": "echos-asl",
+        "image": "content/covers/ECHOS2.png",
+        "summary": "Flutter + Firebase full stack app to learn ASL via interactive tutorials, with an ML module for translation.",
         "description": """
 **What it is**  
-A multi agent text to SQL workflow that turns natural language audience definitions into executable SQL across Snowflake.  
-One model generates candidate SQL, another evaluates for correctness, then an execution agent runs the query and logs lineage.
+Echos is a mobile application designed as one place to learn and translate ASL through interactive tutorials.
 
-**Highlights**
-- Multi LLM orchestration with evaluation
-- Guardrails for schema awareness and safe execution
-- Observability with prompt traces and metrics
-- Supports NOT logic, nested groups, and multi dataset joins
+**How it works**  
+- Flutter frontend for a smooth mobile UX  
+- Firebase backend for auth, storage, and app data  
+- Machine learning module for ASL related translation capabilities
 
-**Impact**
-- Reduced analyst turnaround time
-- Scaled to billions of records, with robust caching and retries
+**Highlights**  
+- Full stack mobile app architecture (Flutter + Firebase)  
+- Learning oriented UX built around interactive tutorials  
+- ML module integrated into the product experience
+
+**Links**  
+- GitHub repo: https://github.com/Sanket0412/Echos
         """,
-        "tags": ["LLM", "Agentic", "Snowflake", "Text_to_SQL"],
-        "links": {"Readme": "https://github.com/", "Slides": ""},
+        "tags": ["Flutter", "Firebase", "Mobile_App", "ASL", "Machine_Learning"],
+        "tech": ["Flutter", "Firebase", "Dart", "ML module"],
+        "links": {
+            "Repo": "https://github.com/Sanket0412/Echos",
+        },
     },
-    {   # TODO: Add content
-        "title": "Weighted Hybrid RecSys",
-        "slug": "weighted-hybrid-recsys",
-        "image": "https://images.unsplash.com/photo-1534759846116-5797a4d10a6a?q=80&w=1600&auto=format&fit=crop",
-        "summary": "Publication: Weighted hybrid recommendation using SVD and cosine similarity.",
+    {
+        "title": "Video Summarization (Key Frames + Captions)",
+        "slug": "video-summarization-keyframes-captions",
+        "image": "https://github.com/Sanket0412/Video-Summarization/raw/master/images/default.png",
+        "summary": "Upload a video and get a compact visual summary, unique key frames, and captions generated via a TensorFlow captioning model.",
         "description": """
 **What it is**  
-A weighted hybrid recommendation that combines matrix factorization with content similarity for better coverage and personalization.
+A video summarization pipeline that takes a user uploaded video and returns a curated set of unique frames along with natural language captions for each selected frame.
 
-**Highlights**
-- SVD based latent factors
-- Content features with cosine similarity
-- Dynamic weighting strategy to mitigate cold start
+**How it works**  
+- Frontend (React) uploads a video and renders the returned frames + captions  
+- Backend (Flask) runs the inference pipeline and serves image outputs  
+- Captioning uses Beam Search by default (width 3), configurable from the frontend
 
-**Publication**
-- Springer, icSoftComp 2021
+**Highlights**  
+- End to end flow from upload to summarized outputs  
+- Key frame selection and caption generation packaged behind a simple UI  
+- Clear separation of concerns between UI and model serving
+
+**Notes**  
+- The project is work in progress and relies on pretrained checkpoints for inference
         """,
-        "tags": ["Recommender", "SVD", "Cosine", "Research"],
-        "links": {"Paper": "https://link.springer.com/", "Code": ""},
+        "tags": ["Computer_Vision", "Video", "TensorFlow", "Flask", "React", "Beam_Search"],
+        "tech": ["TensorFlow", "Flask", "React", "OpenCV", "CNN features", "Beam Search"],
+        "links": {
+            "Repo": "https://github.com/Sanket0412/Video-Summarization",
+        },
     },
     {   # TODO: Add content
         "title": "LLM RAG Portfolio Chat",
         "slug": "llm-rag-portfolio-chat",
-        "image": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1600&auto=format&fit=crop",
+        "image": "content/covers/PortfolioChat.png",
         "summary": "Chat that answers as Sanket using retrieval over your portfolio content and PDFs.",
         "description": """
 **What it is**  
@@ -74,7 +88,7 @@ A Streamlit chat that impersonates the portfolio owner. It retrieves from MDX wr
 - Add analytics for question categories and click throughs
         """,
         "tags": ["RAG", "LLM", "Streamlit", "Chroma"],
-        "links": {"Repo": "https://github.com/"},
+        "links": {"Repo": "https://github.com/Sanket0412/Portfolio"},
     },
 ]
 
