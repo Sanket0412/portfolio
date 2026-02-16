@@ -2,10 +2,17 @@
 # Renders experience/work history timeline
 
 import streamlit as st
+from components.theme import apply_dark_theme
 
 # First Streamlit call
 st.set_page_config(page_title="Experience", page_icon="💼", layout="wide")
-
+# apply_dark_theme(
+#     page_bg="#000000",
+#     sidebar_bg="#000724",  # pick your sidebar color here
+#     input_bg="#000724",
+#     button_bg="#000724",
+#     button_bg_hover="#06408e"
+# )
 from components.navbar import render_sidebar_profile
 from components.config.bootstrap import *
 with st.sidebar:
@@ -16,7 +23,8 @@ with st.sidebar:
 EXPERIENCES = [
     {
         "title": "Data Scientist",
-        "company": "Choreograph (WPP Media)",
+        "company": "WPP Media (Choreograph)",
+        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQEg1Ox7FAhShg/company-logo_200_200/B4EZoBzd05GoAI-/0/1760966860672/wpp_media_logo?e=1772668800&v=beta&t=l7FUT9X3_la3oWQMM3l8LHkvzEcSzdpIw2mlX0Q_lw0",
         "website": "https://www.choreograph.com/",
         "location": "New York City, USA",
         "period": "March 2025 - Present",
@@ -26,16 +34,15 @@ Working as a Data Scientist in WPP’s advanced analytics and media intelligence
 
 **Key Responsibilities**
 - Architected the **Audience Creation module** of the Audience Insights App using Python Dash, enabling audience generation across **4.5B+ demographic, financial, and transactional records**
-- Designed and integrated a **text-to-SQL LLM agent** for Snowflake, reducing ad-hoc query turnaround time by **90%** and significantly improving analyst productivity
 - Optimized Snowflake SQL pipelines for audience creation, feature engineering, and profiling workflows at scale
-- Trained and deployed ML models to score audience propensities for global brands including **Unilever, Nestlé, Coca-Cola, and Audible**
+- Trained and deployed ML models to score audience propensities for global brands
 - Delivered **Fusion-as-a-Service** pipelines that map survey data onto national populations using donor-recipient feature fusion
 - Collaborated closely with product, engineering, and analytics stakeholders to productionize ML systems with real business impact
 
 **Technologies**
 - Python, SQL, Snowflake
 - Machine Learning, Feature Engineering, Propensity Modeling
-- LLMs, Text-to-SQL, RAG, LangChain
+- LLMs, RAG, LangChain
 - Dash, FastAPI
         """,
         "tags": ["Data Science", "Machine Learning", "LLMs", "Audience Intelligence", "Production ML", "RAG", "Ads", "Text-to-SQL", "Agentic", "Propensity Modeling"],
@@ -43,6 +50,7 @@ Working as a Data Scientist in WPP’s advanced analytics and media intelligence
     {
         "title": "Data Scientist",
         "company": "Third Estate Ventures",
+        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQGgwlNdQ7FEBA/company-logo_200_200/company-logo_200_200/0/1630601974607/thirdestateventures_logo?e=1772668800&v=beta&t=5t8FBHUcd7Ej3v1h61jGe2Qjonxf9xGHRkghDwAn7QM",
         "website": "",
         "location": "Jersey City, USA",
         "period": "January 2024 - February 2025",
@@ -70,6 +78,7 @@ Led end-to-end data science and ML initiatives in the real estate and preservati
     {
         "title": "Software Engineer",
         "company": "Cloudserve Systems",
+        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQEEm3-PUGLV0Q/company-logo_200_200/company-logo_200_200/0/1630633920850?e=1772668800&v=beta&t=qaAKwoeFuziBJppVbIlHzxxaxtAnTu5lCbhQ3PWe-mk",
         "website": "https://cloudservesystems.com/home",
         "location": "India",
         "period": "May 2021 - August 2022",
@@ -102,12 +111,34 @@ def experience_card(exp: dict):
         # Header row: Title and Period
         cols = st.columns([0.7, 0.3])
         with cols[0]:
-            st.markdown(f"## {exp.get('title', '')}")
-            company = exp.get('company', '')
-            website = exp.get('website') or exp.get('url')
-            location = exp.get('location', '')
-            company_md = f"**[{company}]({website})**" if website else f"**{company}**"
-            st.markdown(f"{company_md} • {location}")
+            # Title row: Logo (optional) + Role title
+            logo = exp.get("logo", "")  # URL or local path
+            title = exp.get("title", "")
+
+            if logo:
+                # Bigger logo and vertically centered with the title
+                title_cols = st.columns([0.13, 0.87], vertical_alignment="center")
+                with title_cols[0]:
+                    st.image(logo, width=64)  # increase size here (60-72 is a good range)
+                with title_cols[1]:
+                    st.markdown(
+                        f"<div style='display:flex;align-items:center;height:64px;'>"
+                        f"<span style='font-size:44px;font-weight:800;line-height:1;'>{title}</span>"
+                        f"</div>",
+                        unsafe_allow_html=True,
+                    )
+            else:
+                st.markdown(f"## {title}")
+
+            # Company + location row (this was missing)
+            company = exp.get("company", "")
+            website = exp.get("website") or exp.get("url")
+            location = exp.get("location", "")
+            if company or location:
+                company_md = f"**[{company}]({website})**" if (company and website) else (f"**{company}**" if company else "")
+                sep = " • " if (company_md and location) else ""
+                st.markdown(f"{company_md}{sep}{location}")
+
         with cols[1]:
             st.markdown(
                 f"<div style='text-align:right;color:#9ca3af;margin-top:0.5rem;'>{exp.get('period', '')}</div>",
@@ -128,6 +159,8 @@ def experience_card(exp: dict):
                 for tag in tags
             ])
             st.markdown(f"<div>{tag_html}</div>", unsafe_allow_html=True)
+
+
 
 st.title("Experience")
 st.caption("Professional work history and career highlights")

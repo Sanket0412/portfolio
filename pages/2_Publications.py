@@ -6,10 +6,17 @@ import json
 from pathlib import Path
 from typing import List, Dict, Any
 import streamlit as st
+from components.theme import apply_dark_theme
 
 # First Streamlit call
 st.set_page_config(page_title="Publications", page_icon="📄", layout="wide")
-
+# apply_dark_theme(
+#     page_bg="#000000",
+#     sidebar_bg="#000724",  # pick your sidebar color here
+#     input_bg="#000724",
+#     button_bg="#000724",
+#     button_bg_hover="#06408e"
+# )
 from components.navbar import render_sidebar_profile
 from components.config.bootstrap import *
 with st.sidebar:
