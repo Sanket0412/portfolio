@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import streamlit as st
 from components.navbar import render_sidebar_profile
+from components.theme import apply_dark_theme
 
 
 # 1) First Streamlit call on the page
@@ -14,6 +15,13 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+# apply_dark_theme(
+#     page_bg="#000000",
+#     sidebar_bg="#000724",  # pick your sidebar color here
+#     input_bg="#000724",
+#     button_bg="#000724",
+#     button_bg_hover="#06408e"
+# )
 
 with st.sidebar:
     render_sidebar_profile(show_env=False)
@@ -48,7 +56,7 @@ MODEL_NAME = get_env("MODEL_NAME", "gpt-4o-mini")
 # =========================
 
 
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([1.6, 1.15])
 with col1:
     st.title("Hi, I am Sanket J Shah")
     st.subheader("Data Scientist, MLE and a Gen AI expert")
@@ -73,18 +81,26 @@ with col2:
     st.markdown("### Education")
 
     with st.container(border=True):
-        st.markdown("**Master of Science in Computer Science**")
-        st.caption("Stevens Institute of Technology, Hoboken, NJ")
-        st.write("Graduated: January 2024")
-        #st.write("Coursework: Machine Learning, Deep Learning, Big Data, Applied AI")
+        edu_cols = st.columns([0.22, 0.78], vertical_alignment="center")
+        with edu_cols[0]:
+            st.image("https://media.licdn.com/dms/image/v2/C4E0BAQG4-wgic6mvtQ/company-logo_200_200/company-logo_200_200/0/1659965758390/stevens_institute_of_technology_logo?e=1772668800&v=beta&t=89XXzdJNTwWygdQ7oWedR6vuk5ER8xaefcVfwtapaco", width=72)
+        with edu_cols[1]:
+            st.markdown("**Master of Science in Computer Science**")
+            st.caption("Stevens Institute of Technology, Hoboken, NJ")
+            st.write("Graduated: January 2024")
+            #st.write("Coursework: Machine Learning, Deep Learning, Big Data, Applied AI")
 
     st.write("")
 
     with st.container(border=True):
-        st.markdown("**B.Tech, Information and Communication Technology**")
-        st.caption("Ahmedabad University, India")
-        st.write("Graduated: May 2022")
-        #st.write("Coursework: Data Structures and Algorithms, Database Management Systems, Operating Systems, Software Engineering, Human Computer Interaction, Cloud Computing")
+        edu_cols = st.columns([0.22, 0.78], vertical_alignment="center")
+        with edu_cols[0]:
+            st.image("https://media.licdn.com/dms/image/v2/C510BAQHckPx_aapn0A/company-logo_200_200/company-logo_200_200/0/1630567802716/ahmedabaduniversity_logo?e=1772668800&v=beta&t=lRtAFzG_v5MYqspg_O7ygMhq6vGB-AkG2D-4igfsJfo", width=72)
+        with edu_cols[1]:
+            st.markdown("**B.Tech, Information and Communication Technology**")
+            st.caption("Ahmedabad University, India")
+            st.write("Graduated: May 2022")
+            #st.write("Coursework: Data Structures and Algorithms, Database Management Systems, Operating Systems, Software Engineering, Human Computer Interaction, Cloud Computing")
 
 
 st.divider()
@@ -95,15 +111,15 @@ st.divider()
 st.markdown("### Highlights")
 hcol1, hcol2, hcol3 = st.columns(3)
 with hcol1:
-    st.markdown("**Audience Creation Agent**")
-    st.caption("Agentic text to SQL. Multi LLM evaluation and execution.")
+    st.markdown("**Video Summarization (Key Frames + Captions)**")
+    st.caption("Upload a video and get a compact visual summary.")
     st.page_link("pages/1_Projects.py", label="Open", icon="➡️")
 with hcol2:
     st.markdown("**Weighted Hybrid RecSys**")
     st.caption("SVD plus cosine similarity. Publication in Springer.")
     st.page_link("pages/2_Publications.py", label="Open", icon="➡️")
 with hcol3:
-    st.markdown("**LLM RAG Portfolio Chat**")
+    st.markdown("**CloneAMA - LLM RAG Portfolio Chat**")
     st.caption("Chat that answers as Sanket using RAG over this site.")
     st.page_link("pages/4_Chat.py", label="Try it", icon="➡️")
 
@@ -132,4 +148,4 @@ with hcol3:
 # Footer
 # =========================
 st.markdown("---")
-st.caption("© 2025 Sanket J Shah • Built with Streamlit.")
+st.caption("© 2026 Sanket J Shah • Built with Streamlit.")
