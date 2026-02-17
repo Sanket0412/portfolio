@@ -1,30 +1,23 @@
-# Sanket Shah - AI-Powered Portfolio
+# Sanket Shah Portfolio
 
-An interactive portfolio built with Streamlit, featuring Projects, Publications, Experience, and a RAG-based chatbot (CloneAMA) that answers questions in my voice using only curated portfolio sources.
+A Streamlit portfolio with Projects, Publications, Experience, and a Retrieval Augmented Generation (RAG) chatbot that answers questions as Sanket J Shah using curated portfolio sources.
 
-## Features
+## Pages
 
-### Projects
-- Modular project cards with rich descriptions, tags, and external links
-- Easy to extend by editing the Projects page content
+- Home: profile and navigation
+- Projects: project cards and details
+- Publications: publications rendered from JSON
+- Experience: experience timeline and impact
+- Chat: RAG-based chat interface
 
-### Publications
-- Auto-rendered publication cards
-- Structured JSON-backed metadata (venue, authors, abstract, citations)
+## RAG Chatbot
 
-### Experience
-- Timeline-style experience cards
-- Focus on impact, scale, and technologies
-
-### AI Chatbot (RAG) - CloneAMA
-- Chat interface that answers as Sanket J Shah
-- Retrieval over curated documents (resume, LinkedIn, project PDFs, persona summary)
-- History-aware question rewriting to reduce drift
-- Guardrails to reduce hallucinations and block prompt injection attempts
-
-## System Design and Architecture
-
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the end-to-end RAG pipeline, prompting strategy, security notes, and tradeoffs.
+The chat experience is backed by a RAG pipeline that:
+- Loads curated sources from the repository
+- Chunks and embeds content
+- Retrieves the most relevant context for each question
+- Produces answers that must stay grounded in retrieved context
+- Applies basic guardrails like rate limiting and prompt injection blocking
 
 ## Project Structure
 
@@ -39,7 +32,6 @@ Portfolio/
 ├── components/
 │   ├── navbar.py
 │   ├── project_cards.py
-│   ├── theme.py
 │   ├── llm/
 │   │   ├── chain.py
 │   │   └── rag.py
@@ -47,15 +39,15 @@ Portfolio/
 │       ├── bootstrap.py
 │       └── secrets.py
 ├── content/
-│   ├── profile/
-│   │   ├── linkedin.pdf
-│   │   └── resume.pdf
+│   ├── covers/
+│   ├── experience/
+│   ├── logos/
 │   ├── persona/
 │   │   └── summary.txt
+│   ├── profile/
+│   │   ├── linkedin.pdf
+│   │   └── interview_qa.json
 │   ├── projects/
-│   │   ├── WPP_Media_Projects.pdf (optional but supported)
-│   │   ├── Third_Estate_Ventures_Projects.pdf (optional but supported)
-│   │   └── Cloudserve_Projects.pdf (optional but supported)
 │   └── publications/
 │       └── publications.json
 ├── scripts/
@@ -66,43 +58,41 @@ Portfolio/
 └── requirements-dev.txt
 ```
 
-## Running Locally
+Notes:
+- If resume.pdf is present, it typically lives in content/profile/resume.pdf. If it is not present in the repo, remove references to it from this document.
+- If additional project PDFs exist, place them in content/projects/ and the RAG loader can optionally ingest them if configured.
+
+## Run Locally
 
 ### 1) Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2) Set API keys
+### 2) Configure secrets
 
-Option A: Streamlit secrets (recommended)
+Recommended: Streamlit secrets
 
-1. Copy the example secrets file:
 ```bash
 cp .streamlit/secrets.toml.example .streamlit/secrets.toml
 ```
 
-2. Edit `.streamlit/secrets.toml` and set:
+Set this key in `.streamlit/secrets.toml`:
 - OPENAI_API_KEY
 
-Option B: .env (works locally)
-Create a `.env` in the repo root and set:
+Alternative (local only): .env in the repo root
 ```bash
 OPENAI_API_KEY=your_key_here
 ```
 
-### 3) Run the app
+### 3) Start the app
 ```bash
 streamlit run Home.py
 ```
 
-## Deployment (Streamlit Community Cloud)
+## Deploy
 
-- Deploy the repo on Streamlit Community Cloud.
-- Add OPENAI_API_KEY under App Settings -> Secrets.
-- Do not commit `.streamlit/secrets.toml`.
-
-## Author
-
-Sanket J Shah  
-Data Scientist | ML Engineer | GenAI
+Streamlit Community Cloud:
+- Connect the GitHub repo
+- Add OPENAI_API_KEY in the app Secrets settings
+- Do not commit `.streamlit/secrets.toml`
