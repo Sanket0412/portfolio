@@ -33,8 +33,8 @@ The chatbot answers strictly from the curated repository content, treated as gro
 
 - content/profile/linkedin.pdf
 - content/profile/resume.pdf
-- content/profile/summary.txt
-- Optional curated interview answers: content/persona/interview_qa.json (fallbacks also supported)
+- content/persona/summary.txt
+- Persona summary: content/persona/summary.txt
 - Optional project PDFs: content/projects/
   - WPP_Media_Projects.pdf
   - Third_Estate_Ventures_Projects.pdf
@@ -49,7 +49,7 @@ Implementation: components/llm/rag.py
 1. Document loading
    - PDFs parsed using pdfplumber
    - Text files loaded via filesystem reads
-   - Interview Q&A JSON is loaded into individual Documents so retrieval can return a complete vetted answer block
+   - Persona summary text is loaded into a Document to provide consistent grounding for biographical questions
 
 2. Sanitization and injection resistance
    - Retrieved text is lightly sanitized
@@ -57,7 +57,7 @@ Implementation: components/llm/rag.py
 
 3. Chunking
    - Most documents are chunked using RecursiveCharacterTextSplitter (token-aware)
-   - Interview Q&A items are kept intact (not chunked)
+   - Persona summary is kept intact (not chunked)
 
 4. Embeddings and vector store
    - Embeddings: OpenAIEmbeddings

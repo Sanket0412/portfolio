@@ -49,10 +49,9 @@ Portfolio/
 ├── content/
 │   ├── profile/
 │   │   ├── linkedin.pdf
-│   │   ├── resume.pdf
-│   │   └── summary.txt
+│   │   └── resume.pdf
 │   ├── persona/
-│   │   └── interview_qa.json (optional)
+│   │   └── summary.txt
 │   ├── projects/
 │   │   ├── WPP_Media_Projects.pdf (optional but supported)
 │   │   ├── Third_Estate_Ventures_Projects.pdf (optional but supported)
