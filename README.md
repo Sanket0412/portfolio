@@ -16,7 +16,7 @@ The chat experience is backed by a RAG pipeline that:
 - Loads curated sources from the repository
 - Chunks and embeds content
 - Retrieves the most relevant context for each question
-- Produces answers that must stay grounded in retrieved context
+- Produces answers that must stay grounded in the retrieved context
 - Applies basic guardrails like rate limiting and prompt injection blocking
 
 ## Project Structure
@@ -42,11 +42,10 @@ Portfolio/
 │   ├── covers/
 │   ├── experience/
 │   ├── logos/
-│   ├── persona/
-│   │   └── summary.txt
 │   ├── profile/
 │   │   ├── linkedin.pdf
 │   │   └── interview_qa.json
+|   |   └── summary.txt
 │   ├── projects/
 │   └── publications/
 │       └── publications.json
@@ -60,7 +59,7 @@ Portfolio/
 
 Notes:
 - If resume.pdf is present, it typically lives in content/profile/resume.pdf. If it is not present in the repo, remove references to it from this document.
-- If additional project PDFs exist, place them in content/projects/ and the RAG loader can optionally ingest them if configured.
+- If additional project PDFs exist, place them in content/projects/, and the RAG loader can optionally ingest them if configured.
 
 ## Run Locally
 
