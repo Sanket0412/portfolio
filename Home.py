@@ -83,7 +83,7 @@ with col2:
     with st.container(border=True):
         edu_cols = st.columns([0.22, 0.78], vertical_alignment="center")
         with edu_cols[0]:
-            st.image("https://media.licdn.com/dms/image/v2/C4E0BAQG4-wgic6mvtQ/company-logo_200_200/company-logo_200_200/0/1659965758390/stevens_institute_of_technology_logo?e=1772668800&v=beta&t=89XXzdJNTwWygdQ7oWedR6vuk5ER8xaefcVfwtapaco", width=72)
+            st.image("content/logos/stevens_logo.png", width=72)
         with edu_cols[1]:
             st.markdown("**Master of Science in Computer Science**")
             st.caption("Stevens Institute of Technology, Hoboken, NJ")
@@ -95,7 +95,7 @@ with col2:
     with st.container(border=True):
         edu_cols = st.columns([0.22, 0.78], vertical_alignment="center")
         with edu_cols[0]:
-            st.image("https://media.licdn.com/dms/image/v2/C510BAQHckPx_aapn0A/company-logo_200_200/company-logo_200_200/0/1630567802716/ahmedabaduniversity_logo?e=1772668800&v=beta&t=lRtAFzG_v5MYqspg_O7ygMhq6vGB-AkG2D-4igfsJfo", width=72)
+            st.image("content/logos/ahduni_logo.png", width=72)
         with edu_cols[1]:
             st.markdown("**B.Tech, Information and Communication Technology**")
             st.caption("Ahmedabad University, India")
