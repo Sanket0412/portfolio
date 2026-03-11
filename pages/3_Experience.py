@@ -24,7 +24,7 @@ EXPERIENCES = [
     {
         "title": "Data Scientist",
         "company": "WPP Media (Choreograph)",
-        "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQEg1Ox7FAhShg/company-logo_200_200/B4EZoBzd05GoAI-/0/1760966860672/wpp_media_logo?e=1772668800&v=beta&t=l7FUT9X3_la3oWQMM3l8LHkvzEcSzdpIw2mlX0Q_lw0",
+        "logo": "content/logos/wpp_logo.png",
         "website": "https://www.choreograph.com/",
         "location": "New York City, USA",
         "period": "March 2025 - Present",
@@ -50,7 +50,7 @@ Working as a Data Scientist in WPP’s advanced analytics and media intelligence
     {
         "title": "Data Scientist",
         "company": "Third Estate Ventures",
-        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQGgwlNdQ7FEBA/company-logo_200_200/company-logo_200_200/0/1630601974607/thirdestateventures_logo?e=1772668800&v=beta&t=5t8FBHUcd7Ej3v1h61jGe2Qjonxf9xGHRkghDwAn7QM",
+        "logo": "content/logos/tev_logo.png",
         "website": "",
         "location": "Jersey City, USA",
         "period": "January 2024 - February 2025",
@@ -78,7 +78,7 @@ Led end-to-end data science and ML initiatives in the real estate and preservati
     {
         "title": "Software Engineer",
         "company": "Cloudserve Systems",
-        "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQEEm3-PUGLV0Q/company-logo_200_200/company-logo_200_200/0/1630633920850?e=1772668800&v=beta&t=qaAKwoeFuziBJppVbIlHzxxaxtAnTu5lCbhQ3PWe-mk",
+        "logo": "content/logos/cloud_serve_logo.png",
         "website": "https://cloudservesystems.com/home",
         "location": "India",
         "period": "May 2021 - August 2022",
@@ -119,7 +119,7 @@ def experience_card(exp: dict):
                 # Bigger logo and vertically centered with the title
                 title_cols = st.columns([0.13, 0.87], vertical_alignment="center")
                 with title_cols[0]:
-                    st.image(logo, width=64)  # increase size here (60-72 is a good range)
+                    st.image(logo, width=80)  # increase size here (60-72 is a good range)
                 with title_cols[1]:
                     st.markdown(
                         f"<div style='display:flex;align-items:center;height:64px;'>"
