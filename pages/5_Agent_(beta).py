@@ -21,6 +21,20 @@ from portfolio_api.guardrails import looks_like_job_description
 PERSONA_NAME = "Sanket J Shah"
 ASSISTANT_AVATAR = "https://avatars.githubusercontent.com/u/68991626?v=4"
 
+_THINKING_HTML = (
+    "<style>"
+    "@keyframes _td{0%,80%,100%{opacity:.2}40%{opacity:1}}"
+    "._td{display:inline-block;width:5px;height:5px;border-radius:50%;"
+    "background:#9ca3af;margin:0 2px;"
+    "animation:_td 1.4s ease-in-out infinite both}"
+    "._td:nth-child(2){animation-delay:.2s}"
+    "._td:nth-child(3){animation-delay:.4s}"
+    "</style>"
+    "<span style='vertical-align:middle'>"
+    "<span class='_td'></span><span class='_td'></span><span class='_td'></span>"
+    "</span>"
+)
+
 
 def _avatar_for_role(role: str):
     return None if role == "user" else ASSISTANT_AVATAR
@@ -77,6 +91,7 @@ if prompt:
     with st.chat_message("assistant", avatar=_avatar_for_role("assistant")):
         sink = TurnResult()
         placeholder = st.empty()
+        placeholder.markdown(_THINKING_HTML, unsafe_allow_html=True)
         ok = True
         try:
             buffered = []
