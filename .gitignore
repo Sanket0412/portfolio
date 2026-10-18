@@ -210,3 +210,9 @@ __marimo__/
 # Private Claude context (not for public repo)
 /docs/
 /CLAUDE.md
+
+# Next.js frontend (web/)
+web/.next/
+web/node_modules/
+web/.env.local
+web/.env*.local

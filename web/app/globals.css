@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #09090b;
+  color: #fafafa;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Prose-style content inside markdown descriptions */
+.prose-content h2,
+.prose-content h3 {
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+.prose-content p { margin-bottom: 0.5rem; }
+.prose-content ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 0.5rem; }
+.prose-content li { margin-bottom: 0.25rem; }
+.prose-content strong { font-weight: 600; color: #f4f4f5; }
+.prose-content a { color: #3b82f6; text-decoration: underline; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #09090b; }
+::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
