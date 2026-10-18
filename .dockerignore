@@ -1,0 +1,13 @@
+.git
+.venv
+docs
+CLAUDE.md
+web
+pages
+components
+Home.py
+**/__pycache__
+**/*.egg-info
+api/.env
+.env
+.streamlit
