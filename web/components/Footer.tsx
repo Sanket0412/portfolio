@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="border-t border-zinc-800 mt-16 py-8 text-center text-zinc-500 text-sm">
       <div className="mx-auto max-w-6xl px-6">
         <p>
-          &copy; {new Date().getFullYear()} Sanket J Shah &mdash; Built with Next.js &amp; FastAPI
+          &copy; {new Date().getFullYear()} Sanket J Shah | Built with Next.js &amp; FastAPI
         </p>
         <p className="mt-1 text-zinc-600">
           <a
