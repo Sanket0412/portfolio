@@ -7,7 +7,7 @@ content), so ``add_documents(..., ids=...)`` upserts and re-running produces no
 duplicates. Pass ``--reset`` to drop and recreate the collection for a clean rebuild.
 
 Run:  python api/scripts/ingest.py [--reset]
-Requires api/.env populated (DATABASE_URL, OPENAI_API_KEY).
+Requires api/.env populated (DATABASE_URL and the embeddings provider key).
 """
 from __future__ import annotations
 
@@ -54,7 +54,10 @@ def main() -> int:
     args = parser.parse_args()
 
     settings = get_settings()
-    settings.require("database_url", "openai_api_key")
+    settings.require(
+        "database_url",
+        "voyage_api_key" if settings.embedding_provider == "voyage" else "openai_api_key",
+    )
 
     try:
         docs = load_profile_context()

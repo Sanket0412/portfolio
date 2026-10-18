@@ -4,10 +4,10 @@ Checks, in order:
   1. config loads
   2. pgvector extension is enabled (enables it if privileges allow)
   3. each configured LLM provider responds to a tiny ping
-  4. embeddings return a 1536-dim vector
+  4. embeddings return a vector of the configured dimension
 
 Run:  python api/scripts/check_infra.py
-Requires api/.env populated (DATABASE_URL, OPENAI_API_KEY, ANTHROPIC_API_KEY).
+Requires api/.env populated (DATABASE_URL, ANTHROPIC_API_KEY, VOYAGE_API_KEY or OPENAI_API_KEY).
 """
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def _redact(text: str, settings) -> str:
                         out = out.replace(win, "***")
         except Exception:
             pass
-    for secret in (settings.openai_api_key, settings.anthropic_api_key):
+    for secret in (settings.openai_api_key, settings.anthropic_api_key, settings.voyage_api_key):
         if secret and len(secret) > 8:
             out = out.replace(secret, "***")
     return out
@@ -104,13 +104,14 @@ def main() -> int:
             failures += 1
 
     # --- embeddings ---
-    if settings.openai_api_key:
+    emb_key = settings.voyage_api_key if settings.embedding_provider == "voyage" else settings.openai_api_key
+    if emb_key:
         try:
             from portfolio_api.llm import get_embeddings
 
             vec = get_embeddings().embed_query("hello")
             if len(vec) == settings.embedding_dim:
-                _ok(f"embeddings dim = {len(vec)}")
+                _ok(f"embeddings ({settings.embedding_provider}) dim = {len(vec)}")
             else:
                 _fail(f"embeddings dim {len(vec)} != expected {settings.embedding_dim}")
                 failures += 1
@@ -118,7 +119,7 @@ def main() -> int:
             _fail(_redact(f"embeddings: {type(e).__name__}: {e}", settings))
             failures += 1
     else:
-        _skip("OPENAI_API_KEY not set; skipping embeddings check")
+        _skip(f"{settings.embedding_provider} embeddings key not set; skipping embeddings check")
 
     print()
     if failures:

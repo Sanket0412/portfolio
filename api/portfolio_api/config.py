@@ -40,11 +40,26 @@ class Settings:
         default_factory=lambda: float(os.getenv("LLM_TEMPERATURE", "0.4"))
     )
 
-    # Embeddings (always OpenAI for a stable 1536-dim vector space)
-    embedding_model: str = field(
-        default_factory=lambda: os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+    # Embeddings: "voyage" (default; Anthropic's recommended partner) or "openai".
+    # Dimension depends on provider/model; changing either requires `ingest.py --reset`.
+    embedding_provider: str = field(
+        default_factory=lambda: os.getenv("EMBEDDING_PROVIDER", "voyage").lower()
     )
-    embedding_dim: int = field(default_factory=lambda: int(os.getenv("EMBEDDING_DIM", "1536")))
+    voyage_api_key: str = field(default_factory=lambda: os.getenv("VOYAGE_API_KEY", ""))
+    embedding_model: str = field(
+        default_factory=lambda: os.getenv("EMBEDDING_MODEL")
+        or (
+            "text-embedding-3-small"
+            if os.getenv("EMBEDDING_PROVIDER", "voyage").lower() == "openai"
+            else "voyage-3.5-lite"
+        )
+    )
+    embedding_dim: int = field(
+        default_factory=lambda: int(
+            os.getenv("EMBEDDING_DIM")
+            or (1536 if os.getenv("EMBEDDING_PROVIDER", "voyage").lower() == "openai" else 1024)
+        )
+    )
 
     # Vector store (Supabase Postgres + pgvector)
     database_url: str = field(default_factory=lambda: os.getenv("DATABASE_URL", ""))
