@@ -91,6 +91,9 @@ def main() -> int:
 
     for provider, key in (("openai", settings.openai_api_key),
                           ("anthropic", settings.anthropic_api_key)):
+        if provider != settings.llm_provider:
+            _skip(f"{provider}: not the configured LLM_PROVIDER; skipping ping")
+            continue
         if not key:
             _skip(f"{provider}: no API key set")
             continue

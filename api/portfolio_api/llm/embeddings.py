@@ -6,6 +6,7 @@ dimension is fixed by the provider/model, so changing either requires re-ingesti
 """
 from __future__ import annotations
 
+import time
 from functools import lru_cache
 from typing import List
 
@@ -14,6 +15,8 @@ from langchain_core.embeddings import Embeddings
 from portfolio_api.config import get_settings
 
 _VOYAGE_BATCH = 64
+_RETRIES = 6
+_BACKOFF_SECONDS = 20.0
 
 
 class VoyageEmbeddings(Embeddings):
@@ -33,14 +36,27 @@ class VoyageEmbeddings(Embeddings):
     def _embed(self, texts: List[str], input_type: str) -> List[List[float]]:
         out: List[List[float]] = []
         for i in range(0, len(texts), _VOYAGE_BATCH):
-            res = self._client.embed(
-                texts[i : i + _VOYAGE_BATCH],
-                model=self._model,
-                input_type=input_type,
-                output_dimension=self._dim,
-            )
-            out.extend(res.embeddings)
+            out.extend(self._embed_batch(texts[i : i + _VOYAGE_BATCH], input_type))
         return out
+
+    def _embed_batch(self, batch: List[str], input_type: str) -> List[List[float]]:
+        """One API call, retrying rate-limit errors (new accounts start with low limits)."""
+        import voyageai
+
+        for attempt in range(_RETRIES):
+            try:
+                res = self._client.embed(
+                    batch,
+                    model=self._model,
+                    input_type=input_type,
+                    output_dimension=self._dim,
+                )
+                return res.embeddings
+            except voyageai.error.RateLimitError:
+                if attempt == _RETRIES - 1:
+                    raise
+                time.sleep(_BACKOFF_SECONDS * (attempt + 1))
+        raise AssertionError("unreachable")
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         return self._embed(texts, "document")
