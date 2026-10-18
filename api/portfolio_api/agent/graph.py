@@ -45,6 +45,7 @@ from portfolio_api.guardrails import (
     MEMORY_REPLY,
     is_greeting,
     is_memory_like,
+    looks_like_refusal,
     redact_secrets,
     should_block_user_input,
     strip_em_dashes,
@@ -176,6 +177,12 @@ def _finalize(text: str) -> str:
     return truncate_answer(strip_em_dashes(redact_secrets(text)))
 
 
+def visible_citations(answer_text: str, citations: List[Citation]) -> List[Citation]:
+    """Hide citation chips on refusals: the seeded retrieval always runs, but sources
+    shown beside "I do not have that information" would imply they support it."""
+    return [] if looks_like_refusal(answer_text) else citations
+
+
 def answer(
     question: str,
     history: Optional[List[BaseMessage]] = None,
@@ -200,7 +207,7 @@ def answer(
 
     last = final["messages"][-1]
     text = _finalize(message_text(last))
-    citations = get_citations()
+    citations = visible_citations(text, get_citations())
     sources = sorted({c.source for c in citations})
 
     return AgentResult(
@@ -253,7 +260,7 @@ def stream_answer(
                 buffered.append(text)
                 yield strip_em_dashes(text)
 
-    citations = get_citations()
     sink.answer = _finalize("".join(buffered))
+    citations = visible_citations(sink.answer, get_citations())
     sink.citations = citations
     sink.sources = sorted({c.source for c in citations})

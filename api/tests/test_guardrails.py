@@ -14,3 +14,11 @@ def test_jd_detector_needs_length_and_signals():
     jd = ("We are looking for an engineer. Responsibilities include building models. "
           "Qualifications: 5 years of experience. " * 4)
     assert g.looks_like_job_description(jd)
+
+
+def test_refusal_detection_is_conservative():
+    assert g.looks_like_refusal(g.EMPTY_CONTEXT_REPLY)
+    assert g.looks_like_refusal("I don't have any information about that topic.")
+    long_answer = "I don't have details on X, but here is what I built. " + "word " * 120
+    assert not g.looks_like_refusal(long_answer)
+    assert not g.looks_like_refusal("At WPP Media I built an audience platform.")

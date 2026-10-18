@@ -118,3 +118,28 @@ def truncate_answer(text: str, *, max_chars: int = MAX_ANSWER_CHARS) -> str:
     if text and len(text) > max_chars:
         return text[:max_chars].rstrip() + "\n\n(Truncated for length.)"
     return text
+
+
+# Refusal detection (suppresses citation chips on "I looked and found nothing" replies,
+# since retrieval is seeded for every turn). Deliberately conservative: only short
+# answers that open with refusal phrasing count, so a substantive answer that merely
+# notes a gap keeps its sources.
+_REFUSAL_PATTERNS = [
+    r"\bi (?:do not|don't) have (?:any |enough |that )?(?:information|context|details)\b",
+    r"\b(?:outside|beyond) (?:the scope|what i)\b",
+    r"\bi can(?:not|'t) (?:help|answer|speak) (?:with|to) that\b",
+    r"\bnot something i (?:can|have)\b",
+    r"\bi(?:'m| am) here to (?:talk|answer|discuss)\b",
+    r"\bi (?:only|can only) (?:answer|discuss|talk)\b",
+]
+_REFUSAL_MAX_CHARS = 450
+
+
+def looks_like_refusal(answer: str) -> bool:
+    """True for a short reply that declines / says the context lacks the answer."""
+    text = (answer or "").strip()
+    if not text or len(text) > _REFUSAL_MAX_CHARS:
+        return False
+    if text == EMPTY_CONTEXT_REPLY:
+        return True
+    return any(re.search(p, text, re.IGNORECASE) for p in _REFUSAL_PATTERNS)

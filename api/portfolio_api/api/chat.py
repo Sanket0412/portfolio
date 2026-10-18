@@ -35,6 +35,7 @@ from portfolio_api.agent.graph import (
     build_agent,
     fast_path_suggestions,
     message_text,
+    visible_citations,
 )
 from portfolio_api.agent.suggestions import generate_suggestions
 from portfolio_api.agent.tools import get_citations, reset_citations
@@ -124,13 +125,13 @@ async def _event_stream(req: ChatRequest) -> AsyncGenerator[dict, None]:
             elif kind == "on_tool_end":
                 yield _sse("tool_result", {"name": event.get("name", "")})
 
-        citations = get_citations()
+        final_text = _finalize("".join(buffered))
+        citations = visible_citations(final_text, get_citations())
         yield _sse(
             "citations",
             [{"source": c.source, "snippet": c.snippet, "score": c.score} for c in citations],
         )
 
-        final_text = _finalize("".join(buffered))
         yield _sse("final", {"answer": final_text})
         yield _sse(
             "suggestions",
