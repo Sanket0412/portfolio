@@ -51,7 +51,7 @@ class Settings:
         or (
             "text-embedding-3-small"
             if os.getenv("EMBEDDING_PROVIDER", "voyage").lower() == "openai"
-            else "voyage-3.5-lite"
+            else "voyage-4-lite"
         )
     )
     embedding_dim: int = field(

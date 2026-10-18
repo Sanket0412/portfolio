@@ -22,3 +22,8 @@ def test_refusal_detection_is_conservative():
     long_answer = "I don't have details on X, but here is what I built. " + "word " * 120
     assert not g.looks_like_refusal(long_answer)
     assert not g.looks_like_refusal("At WPP Media I built an audience platform.")
+
+
+def test_choreograph_normalized_to_wpp_media():
+    assert g.normalize_company_names("the Choreograph Data team") == "the WPP Media Data team"
+    assert g.normalize_company_names("no change here") == "no change here"

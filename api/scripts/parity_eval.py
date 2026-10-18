@@ -35,6 +35,9 @@ QUESTIONS = [
 ]
 
 
+sys.stdout.reconfigure(encoding="utf-8")  # answers may contain non-cp1252 chars (e.g. the rupee sign)
+
+
 def main() -> int:
     print(f"Running parity eval over {len(QUESTIONS)} questions\n")
     for i, q in enumerate(QUESTIONS, 1):

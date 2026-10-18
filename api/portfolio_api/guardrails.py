@@ -143,3 +143,11 @@ def looks_like_refusal(answer: str) -> bool:
     if text == EMPTY_CONTEXT_REPLY:
         return True
     return any(re.search(p, text, re.IGNORECASE) for p in _REFUSAL_PATTERNS)
+
+
+_CHOREOGRAPH_RE = re.compile(r"\bChoreograph\b")
+
+
+def normalize_company_names(text: str) -> str:
+    """Persona rule: Choreograph is always called WPP Media (prompt rule, enforced here)."""
+    return _CHOREOGRAPH_RE.sub("WPP Media", text or "")

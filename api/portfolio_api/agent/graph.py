@@ -46,6 +46,7 @@ from portfolio_api.guardrails import (
     is_greeting,
     is_memory_like,
     looks_like_refusal,
+    normalize_company_names,
     redact_secrets,
     should_block_user_input,
     strip_em_dashes,
@@ -174,7 +175,7 @@ def fast_path_suggestions(question: str) -> List[str]:
 def _finalize(text: str) -> str:
     """Apply the output guardrails: empty fallback, redact, no em-dashes, truncate."""
     text = (text or "").strip() or EMPTY_CONTEXT_REPLY
-    return truncate_answer(strip_em_dashes(redact_secrets(text)))
+    return truncate_answer(normalize_company_names(strip_em_dashes(redact_secrets(text))))
 
 
 def visible_citations(answer_text: str, citations: List[Citation]) -> List[Citation]:

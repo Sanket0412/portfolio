@@ -18,7 +18,7 @@ class _FakeClient:
 def test_voyage_adapter_batches_and_sets_input_type(monkeypatch):
     monkeypatch.setitem(sys.modules, "voyageai", types.SimpleNamespace(Client=_FakeClient, error=types.SimpleNamespace(RateLimitError=RuntimeError)))
     _FakeClient.calls = []
-    emb = VoyageEmbeddings("k", "voyage-3.5-lite", 8)
+    emb = VoyageEmbeddings("k", "voyage-4-lite", 8)
     docs = emb.embed_documents(["t"] * 130)
     assert len(docs) == 130 and len(docs[0]) == 8
     assert [c[0] for c in _FakeClient.calls] == [64, 64, 2]
