@@ -58,6 +58,16 @@ class Settings:
         default_factory=lambda: os.getenv("GITHUB_USERNAME", "Sanket0412")
     )
 
+    # Abuse protection (Phase 5). A limit <= 0 disables that window.
+    rate_limit_per_minute: int = field(
+        default_factory=lambda: int(os.getenv("RATE_LIMIT_PER_MINUTE", "8"))
+    )
+    rate_limit_per_day: int = field(
+        default_factory=lambda: int(os.getenv("RATE_LIMIT_PER_DAY", "150"))
+    )
+    # Optional shared secret the BFF sends in X-Internal-Key; empty disables the check.
+    internal_api_key: str = field(default_factory=lambda: os.getenv("INTERNAL_API_KEY", ""))
+
     # FastAPI
     cors_origins: list[str] = field(
         default_factory=lambda: _split_csv(os.getenv("CORS_ORIGINS", "*"))

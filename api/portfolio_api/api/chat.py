@@ -23,7 +23,7 @@ from __future__ import annotations
 import json
 from typing import AsyncGenerator, List, Literal, Optional
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Request
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from pydantic import BaseModel, Field
 from sse_starlette.sse import EventSourceResponse
@@ -38,20 +38,37 @@ from portfolio_api.agent.graph import (
 )
 from portfolio_api.agent.suggestions import generate_suggestions
 from portfolio_api.agent.tools import get_citations, reset_citations
+from portfolio_api.config import get_settings
 from portfolio_api.guardrails import strip_em_dashes
+from portfolio_api.ratelimit import ChatRateLimiter
 
 router = APIRouter()
+
+# Input bounds: generous enough for a pasted job description, tight enough to cap cost.
+MAX_MESSAGE_CHARS = 8000
+MAX_HISTORY_MESSAGES = 20
+
+_settings = get_settings()
+_limiter = ChatRateLimiter(_settings.rate_limit_per_minute, _settings.rate_limit_per_day)
 
 
 class ChatMessage(BaseModel):
     role: Literal["user", "assistant"]
-    content: str
+    content: str = Field(max_length=MAX_MESSAGE_CHARS)
 
 
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(max_length=MAX_MESSAGE_CHARS)
     session_id: Optional[str] = None
-    history: List[ChatMessage] = Field(default_factory=list)
+    history: List[ChatMessage] = Field(default_factory=list, max_length=MAX_HISTORY_MESSAGES)
+
+
+def _client_key(request: Request) -> str:
+    """Best-effort client id: first X-Forwarded-For hop (set by the BFF/proxy), else peer."""
+    fwd = request.headers.get("x-forwarded-for", "")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
 
 
 def _to_lc_history(history: List[ChatMessage]) -> List[BaseMessage]:
@@ -127,6 +144,17 @@ async def _event_stream(req: ChatRequest) -> AsyncGenerator[dict, None]:
 
 
 @router.post("/chat")
-async def chat(req: ChatRequest) -> EventSourceResponse:
+async def chat(req: ChatRequest, request: Request) -> EventSourceResponse:
     """Stream an agent turn as Server-Sent Events."""
+    if _settings.internal_api_key and (
+        request.headers.get("x-internal-key") != _settings.internal_api_key
+    ):
+        raise HTTPException(status_code=401, detail="unauthorized")
+    res = _limiter.check(_client_key(request))
+    if not res.allowed:
+        raise HTTPException(
+            status_code=429,
+            detail="rate limit exceeded",
+            headers={"Retry-After": str(res.retry_after)},
+        )
     return EventSourceResponse(_event_stream(req))
