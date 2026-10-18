@@ -24,7 +24,7 @@ Tools
   - lookup_github                live public-repo lookup
   - assess_job_fit               per-requirement evidence for a pasted job description
   ↓
-Supabase Postgres + pgvector (embeddings: text-embedding-3-small, 1536-dim)
+Supabase Postgres + pgvector (embeddings: Voyage AI, 1024-dim)
 ```
 
 The `/chat` endpoint streams Server-Sent Events: `token`, `tool_call`, `tool_result`,
