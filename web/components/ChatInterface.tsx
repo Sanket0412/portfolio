@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useAgentChat, Citation } from "@/hooks/useAgentChat";
 
-const AVATAR = "https://avatars.githubusercontent.com/u/68991626?v=4";
+const AVATAR = "/avatar.jpg"; // self-hosted face crop (public/avatar.jpg)
 
 function CitationChip({ c }: { c: Citation }) {
   const isExact = c.score === 0.0;
@@ -85,7 +85,7 @@ export default function ChatInterface() {
             alt="Sanket J Shah"
             width={36}
             height={36}
-            className="rounded-full"
+            className="rounded-full object-cover h-9 w-9"
           />
           <div>
             <p className="text-zinc-50 font-semibold text-sm">CloneAMA</p>
@@ -108,7 +108,7 @@ export default function ChatInterface() {
         {messages.length === 0 && !turn.streaming && (
           <div className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden border-2 border-zinc-700">
-              <Image src={AVATAR} alt="Sanket" width={64} height={64} />
+              <Image src={AVATAR} alt="Sanket" width={64} height={64} className="h-full w-full object-cover" />
             </div>
             <p className="text-zinc-300 font-medium mb-1">Hi, I&apos;m Sanket (AI)</p>
             <p className="text-zinc-500 text-sm max-w-sm mx-auto">
@@ -136,7 +136,7 @@ export default function ChatInterface() {
                     alt="Sanket"
                     width={32}
                     height={32}
-                    className="rounded-full shrink-0 mt-0.5"
+                    className="rounded-full object-cover h-8 w-8 shrink-0 mt-0.5"
                   />
                 )}
                 <div className={`max-w-[80%] ${isUser ? "items-end" : "items-start"} flex flex-col gap-1.5`}>
@@ -180,7 +180,7 @@ export default function ChatInterface() {
               alt="Sanket"
               width={32}
               height={32}
-              className="rounded-full shrink-0 mt-0.5"
+              className="rounded-full object-cover h-8 w-8 shrink-0 mt-0.5"
             />
             <div className="max-w-[80%] flex flex-col gap-1.5">
               <ToolActivity items={turn.toolActivity} />
