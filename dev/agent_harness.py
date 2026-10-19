@@ -1,10 +1,18 @@
-# pages/5_Agent_(beta).py
+# dev/agent_harness.py
+# Run locally with:  streamlit run dev/agent_harness.py
+# (Kept out of pages/ so the deployed Streamlit site does not list it.)
 # Throwaway harness for the new portfolio_api agent (Phase 1 RAG parity).
 # Calls portfolio_api.agent.answer() in-process against the persistent pgvector
 # store. The original pages/4_Chat.py stays untouched as the parity baseline.
 
-import streamlit as st
+import sys
+from pathlib import Path
 from uuid import uuid4
+
+import streamlit as st
+
+# Streamlit puts only this script's folder on sys.path; add the repo root for components.*
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from components.config.bootstrap import *  # noqa: F401,F403
 from components.navbar import render_sidebar_profile

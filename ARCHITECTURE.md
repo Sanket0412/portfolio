@@ -73,5 +73,5 @@ says so instead of guessing. Ingestion is a one-off, idempotent script
 ## 7. Legacy Streamlit App
 
 `pages/4_Chat.py` with `components/llm/` is the original in-memory RAG chatbot
-(OpenAI, no tools). `pages/5_Agent_(beta).py` calls the new agent in-process and is
+(OpenAI, no tools). `dev/agent_harness.py` (run locally, not part of the deployed Streamlit site) calls the new agent in-process and is
 used as a development harness.
