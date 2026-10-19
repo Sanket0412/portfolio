@@ -1,6 +1,10 @@
 import { NextRequest } from "next/server";
 
-const API_URL = process.env.PORTFOLIO_API_URL ?? "http://localhost:8000";
+// Tolerate a trailing slash or a pasted "/chat" suffix in the env var (either gives a 404).
+const API_URL = (process.env.PORTFOLIO_API_URL ?? "http://localhost:8000")
+  .trim()
+  .replace(/\/+$/, "")
+  .replace(/\/chat$/, "");
 const INTERNAL_KEY = process.env.INTERNAL_API_KEY ?? "";
 
 const SSE_HEADERS = {
