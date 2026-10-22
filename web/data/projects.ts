@@ -35,7 +35,7 @@ CloneAMA is a LangGraph ReAct agent that impersonates me in a grounded, citation
     tags: ["LangGraph", "RAG", "LLM", "FastAPI", "Next.js", "Supabase", "pgvector", "Streaming"],
     tech: ["LangGraph", "FastAPI", "Supabase pgvector", "Claude Haiku 4.5", "Next.js", "TypeScript"],
     links: {
-      Live: "https://sanket-portfolio.vercel.app/chat",
+      Live: "https://sanketshah.dev/chat",
       Repo: "https://github.com/Sanket0412/Portfolio",
     },
   },
