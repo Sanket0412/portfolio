@@ -1,8 +1,6 @@
 # Architecture
 
-This portfolio is being migrated from a single Streamlit app to a Next.js frontend
-backed by a FastAPI + LangGraph agent. Both exist in this repo; the Streamlit app
-(`Home.py`, `pages/`) is still the original site and a comparison baseline.
+This portfolio is a Next.js frontend backed by a FastAPI + LangGraph agent.
 
 ## 1. High-Level Flow
 
@@ -69,9 +67,3 @@ says so instead of guessing. Ingestion is a one-off, idempotent script
 - In-process rate limiting is sufficient for a single API instance; a shared store
   would be needed to scale out.
 - Strict grounding trades some coverage for trust.
-
-## 7. Legacy Streamlit App
-
-`pages/4_Chat.py` with `components/llm/` is the original in-memory RAG chatbot
-(OpenAI, no tools). `dev/agent_harness.py` (run locally, not part of the deployed Streamlit site) calls the new agent in-process and is
-used as a development harness.
