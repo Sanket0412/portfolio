@@ -28,6 +28,10 @@ _INJECTION_PATTERNS = [
 # NOTE: changing this requires a re-ingest (python api/scripts/ingest.py --reset).
 _EXCLUDED_PATTERNS = [
     r"text.?to.?sql",  # the text-to-SQL LLM agent work is intentionally off-limits
+    r"text.?2.?sql",
+    r"nl.?to.?sql",  # the resume calls the same work "NL2SQL"
+    r"nl.?2.?sql",
+    r"natural.?language.?to.?sql",
 ]
 
 
