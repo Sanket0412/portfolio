@@ -223,3 +223,4 @@ web/.env*.local
 # Private RAG source documents (local only; ingest runs from this machine)
 /content/profile/
 /content/projects/
+/content/experience/
