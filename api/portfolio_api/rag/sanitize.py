@@ -74,4 +74,7 @@ def sanitize_retrieved_text(text: str, *, max_chars: int) -> str:
         kept.append(ln)
 
     out = "\n".join(kept).strip()
+    # Persona rule: always "WPP Media". Normalizing at ingest keeps the old name out of
+    # the model's context, so it cannot appear in streamed tokens either.
+    out = re.sub(r"\bChoreograph\b", "WPP Media", out)
     return out[:max_chars]

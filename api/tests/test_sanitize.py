@@ -12,6 +12,11 @@ def test_excluded_topic_spellings():
         assert is_excluded(text), text
 
 
+def test_sanitize_normalizes_old_company_name():
+    out = sanitize_retrieved_text("Data @ Choreograph | GenAI", max_chars=1000)
+    assert out == "Data @ WPP Media | GenAI"
+
+
 def test_staffing_agency_is_excluded():
     assert is_excluded("engaged through Robert Half")
     assert is_excluded("robert-half")
