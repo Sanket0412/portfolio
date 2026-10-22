@@ -219,3 +219,7 @@ web/.env*.local
 
 # Local-only session starter prompt (also covered by /docs/)
 /docs/read_this_bot.md
+
+# Private RAG source documents (local only; ingest runs from this machine)
+/content/profile/
+/content/projects/
