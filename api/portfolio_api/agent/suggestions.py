@@ -34,11 +34,11 @@ MAX_SUGGESTIONS = 3
 STARTER_SUGGESTIONS = [
     "What did you build at WPP Media?",
     "Tell me about your publications.",
-    "What personal projects are you working on?",
+    "What personal projects have you built?",
 ]
 
 _SUGGESTION_SYSTEM = (
-    "You generate short follow-up questions a visitor might ask next on Sanket J Shah's "
+    "You generate short follow-up questions a visitor might ask next on Sanket Shah's "
     "portfolio. Every question must be answerable from Sanket's portfolio (his roles, "
     "projects, skills, education, and publications) and phrased in the second person, as "
     "if the visitor is asking Sanket directly. Keep each under about 12 words. Return ONLY "

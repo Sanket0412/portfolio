@@ -20,7 +20,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm">
       <div className="mx-auto max-w-6xl px-6 flex items-center justify-between h-16">
         <Link href="/" className="font-semibold text-zinc-50 hover:text-blue-400 transition-colors">
-          Sanket J Shah
+          Sanket Shah
         </Link>
 
         {/* Desktop nav */}

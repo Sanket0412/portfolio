@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
       "A production-grade ReAct agent that answers as me, grounded in curated portfolio content with live tool-calling, streaming, and recruiter job-fit analysis.",
     description: `
 ## What it is
-CloneAMA is a LangGraph ReAct agent that impersonates me in a grounded, citation-backed conversation. Recruiters can ask about my work, paste a job description for a fit analysis, or explore my GitHub — all from a single chat interface backed by a persistent Supabase pgvector corpus.
+CloneAMA is a LangGraph ReAct agent that impersonates me in a grounded conversation. Recruiters can ask about my work, paste a job description for a fit analysis, or explore my GitHub — all from a single chat interface backed by a persistent Supabase pgvector corpus.
 
 ## How it works
 - **LangGraph ReAct agent** on Claude Haiku 4.5 with four tools: semantic RAG retrieval, publication lookup (exact citation counts), live GitHub repo search, and job-fit assessment

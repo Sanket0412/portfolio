@@ -1,7 +1,7 @@
 # Sanket Shah Portfolio
 
 Personal portfolio with a RAG-powered chatbot ("CloneAMA") that answers questions as
-Sanket J Shah using curated portfolio sources.
+Sanket Shah using curated portfolio sources.
 
 Production stack:
 

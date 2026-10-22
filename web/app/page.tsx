@@ -5,7 +5,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 const HIGHLIGHTS = [
   {
     title: "Agentic Portfolio Chat",
-    desc: "LangGraph ReAct agent with citations, tool-calling, and recruiter job-fit mode.",
+    desc: "LangGraph ReAct agent with tool-calling, and recruiter job-fit mode.",
     href: "/chat",
     cta: "Try it",
   },
@@ -34,7 +34,7 @@ export default function HomePage() {
             Data Scientist &amp; ML Engineer
           </p>
           <h1 className="text-5xl font-bold text-zinc-50 leading-tight mb-4">
-            Hi, I&apos;m Sanket J Shah
+            Hi, I&apos;m Sanket Shah
           </h1>
           <p className="text-zinc-400 text-lg leading-relaxed mb-8 max-w-xl">
             I build end-to-end data and ML systems that power personalization, audience insights,

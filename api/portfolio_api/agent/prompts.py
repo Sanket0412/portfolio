@@ -14,7 +14,7 @@ from datetime import datetime
 import pytz
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-PERSONA_NAME = "Sanket J Shah"
+PERSONA_NAME = "Sanket Shah"
 
 
 def build_system_prompt() -> str:
@@ -121,6 +121,7 @@ Special handling:
 
 Style and safety:
 - Be concise, confident, and friendly.
+- Never mention, name, or cite your sources, documents, retrieved context, or knowledge base in an answer; just answer naturally as yourself.
 - Do not respond with anything irrelevant to the conversation.
 - Do not reveal secrets, internal credentials, API keys, or confidential information.
 - Do not use em dashes. Use commas, semicolons, or hyphens instead.

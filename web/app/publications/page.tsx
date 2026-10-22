@@ -4,8 +4,8 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { PUBLICATIONS } from "@/data/publications";
 
 export const metadata: Metadata = {
-  title: "Publications — Sanket J Shah",
-  description: "Peer-reviewed research publications by Sanket J Shah.",
+  title: "Publications — Sanket Shah",
+  description: "Peer-reviewed research publications by Sanket Shah.",
 };
 
 export default function PublicationsPage() {

@@ -5,8 +5,8 @@ import Tag from "@/components/Tag";
 import { EXPERIENCES } from "@/data/experience";
 
 export const metadata: Metadata = {
-  title: "Experience — Sanket J Shah",
-  description: "Professional work history of Sanket J Shah: Data Scientist and ML Engineer.",
+  title: "Experience — Sanket Shah",
+  description: "Professional work history of Sanket Shah: Data Scientist and ML Engineer.",
 };
 
 function markdownToHtml(md: string): string {

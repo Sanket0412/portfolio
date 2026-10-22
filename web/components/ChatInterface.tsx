@@ -3,19 +3,9 @@
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useAgentChat, Citation } from "@/hooks/useAgentChat";
+import { useAgentChat } from "@/hooks/useAgentChat";
 
 const AVATAR = "/avatar.jpg"; // self-hosted face crop (public/avatar.jpg)
-
-function CitationChip({ c }: { c: Citation }) {
-  const isExact = c.score === 0.0;
-  return (
-    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs border border-zinc-700 bg-zinc-900 text-zinc-400">
-      {c.source}
-      <span className="text-zinc-600 ml-1">{isExact ? "(exact)" : `(${c.score.toFixed(3)})`}</span>
-    </span>
-  );
-}
 
 function ToolActivity({ items }: { items: string[] }) {
   if (!items.length) return null;
@@ -82,14 +72,14 @@ export default function ChatInterface() {
         <div className="flex items-center gap-3">
           <Image
             src={AVATAR}
-            alt="Sanket J Shah"
+            alt="Sanket Shah"
             width={36}
             height={36}
             className="rounded-full object-cover h-9 w-9"
           />
           <div>
             <p className="text-zinc-50 font-semibold text-sm">CloneAMA</p>
-            <p className="text-zinc-500 text-xs">Chat with Sanket J Shah (AI)</p>
+            <p className="text-zinc-500 text-xs">Chat with Sanket Shah (AI)</p>
           </div>
         </div>
         <button
@@ -154,14 +144,6 @@ export default function ChatInterface() {
                   >
                     {msg.content}
                   </div>
-                  {!isUser && msg.citations && msg.citations.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 px-1">
-                      <span className="text-zinc-600 text-xs self-center">Sources:</span>
-                      {msg.citations.map((c, ci) => (
-                        <CitationChip key={ci} c={c} />
-                      ))}
-                    </div>
-                  )}
                 </div>
               </motion.div>
             );
@@ -195,14 +177,6 @@ export default function ChatInterface() {
                   </span>
                 )}
               </div>
-              {turn.citations.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 px-1">
-                  <span className="text-zinc-600 text-xs self-center">Sources:</span>
-                  {turn.citations.map((c, ci) => (
-                    <CitationChip key={ci} c={c} />
-                  ))}
-                </div>
-              )}
             </div>
           </motion.div>
         )}

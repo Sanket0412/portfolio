@@ -33,7 +33,7 @@ const INITIAL_TURN: TurnState = {
 };
 
 const STARTER_SUGGESTIONS = [
-  "What are you working on right now?",
+  "What personal projects have you built?",
   "What's your most impactful ML project?",
   "Tell me about your experience with LLMs and GenAI.",
 ];
