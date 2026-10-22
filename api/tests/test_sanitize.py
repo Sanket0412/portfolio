@@ -12,6 +12,11 @@ def test_excluded_topic_spellings():
         assert is_excluded(text), text
 
 
+def test_staffing_agency_is_excluded():
+    assert is_excluded("engaged through Robert Half")
+    assert is_excluded("robert-half")
+
+
 def test_unrelated_sql_is_not_excluded():
     assert not is_excluded("wrote AMC SQL to size segments")
     assert not is_excluded("compiles rule trees into Snowflake SQL")

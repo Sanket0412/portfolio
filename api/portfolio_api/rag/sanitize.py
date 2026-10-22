@@ -32,6 +32,7 @@ _EXCLUDED_PATTERNS = [
     r"nl.?to.?sql",  # the resume calls the same work "NL2SQL"
     r"nl.?2.?sql",
     r"natural.?language.?to.?sql",
+    r"robert.?half",  # the staffing agency is never to be mentioned anywhere
 ]
 
 
